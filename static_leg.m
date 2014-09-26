@@ -1,13 +1,13 @@
 function [x_c, x_d, x_q] = static_leg(phi,Q,t)
 
-%% Factors correlating the Saggittal Planes and Frontal Planes
+%% Factors correlating the Sagittal and Frontal Planes
 Kc = cos(phi)/cos(Q);
 Kd = cos(phi)/cos(Q);
 
 %%
 x_q = x_e;
 
-%% Saggittal Plane
+%% Sagittal Plane
 x_c(1) = x_e(1) - (l1+l2)*sin(phi);
 x_c(3) = x_e(3) + (l1+l2)*cos(phi);
 
