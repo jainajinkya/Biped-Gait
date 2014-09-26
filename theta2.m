@@ -4,11 +4,11 @@ global tm td
 
 % if(t<=td/2 || (t>tm && t<=(tm+td/2)))
 if(t<=td/2)
-    theta2_val = 2*(theta1_max-theta2_max)*(t/td);
+    theta2_val = 2*(theta1_max-theta2_max)*(t/td)  - theta1_max;
     
 % elseif(((t>(tm-td/2))&&(t<=tm))||((t>(2*tm-td/2))&&(t<=2*tm)))
 elseif((t>(tm-td/2))&&(t<=tm))
-    theta2_val = theta2_max;
+    theta2_val = theta1_max;
     
 else
     a0 = (td^3*theta1_max - td^3*theta2_max + 4*theta1_max*tm^3 - 8*td*theta1_max*tm^2 + 2*td^2*theta1_max*tm - 4*td*theta2_max*tm^2 + 4*td^2*theta2_max*tm)/(4*(td - tm)*(td^2 - 2*td*tm + tm^2));
