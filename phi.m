@@ -1,6 +1,6 @@
-function phi_val = phi(t,phi_max,Vc)
+function phi_val = phi(t)
 
-global l1 l2 tm
+global l1 l2 tm Vc phi_max
 a0 = phi_max;
 a1 = Vc/((l1+l2)*cos(phi_max));
 a2 = (-3/tm^2)*((Vc*tm)/((l1+l2)*cos(phi_max)) + 2*phi_max);

@@ -1,6 +1,6 @@
-function theta2_val = theta2(t,theta1_max,theta2_max)
+function theta2_val = theta2(t)
 
-global tm td
+global tm td theta1_max theta2_max
 
 % if(t<=td/2 || (t>tm && t<=(tm+td/2)))
 if(t<=td/2)
