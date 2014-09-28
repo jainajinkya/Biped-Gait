@@ -1,13 +1,22 @@
-function maxParameters(Ls,Hvel)
+function maxParameters(Ls)
 
-global l1 l2 l3 l4 l5 tm td x_e Vc phi_max theta1_max theta2_max Qmax % List of all Parameters used in the workspace
+global l1 l2 l3 l4 l5 tm td x_e Vc phi_max theta1_max theta2_max theta_a_min Qmax % List of all Parameters used in the workspace
+
+Vc = Ls/tm ; 
 
 phi_max = asin(Ls/(2*(l1+l2)));
 
-theta1_max = 0.5*Hvel*(tm-td);
+theta1_max = phi_max;
+% theta1_max = 0.5*Hvel*(tm-td);
 
-theta2_max = asin((Ls + (l1+l2)*abs(sin(phi_max)) - l1*sin(theta1_max))/l2);
+phi_d = phi(td);
+A = 2*l1*((l1+l2)*cos(phi_d) - l2*cos(theta1_max));
+B = 2*l1*(l3 + (l1+l2)*sin(phi_max) + l2*sin(theta1_max) - Ls);
+C = l1^2 + ((l1+l2)*cos(phi_d) - l2*cos(theta1_max))^2 + (l3 + (l1+l2)*sin(phi_max) + l2*sin(theta1_max) - Ls)^2 - l3^2;
 
-Vc = Ls/tm ; 
+P = atan2(B,A);
+theta2_max = P + acos(C/sqrt(A^2 + B^2));
+
+theta_a_min = acos((x_e(3)+(l1+l2)*cos(phi_d) - l2*cos(theta1_max) - l1*cos(theta2_max))/l3);
 
 end
