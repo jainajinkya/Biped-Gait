@@ -2,7 +2,7 @@ clear all
 close all
 clc
 
-global l1 l2 l3 l4 l5 tm td x_e Vc phi_max theta1_max theta2_max Qmax
+global l1 l2 l3 l4 l5 tm td x_e Vc phi_max theta1_max theta2_max Q_max
 l1 = 0.45;
 l2 = 0.45;
 l3 = 0.25;
@@ -51,6 +51,7 @@ for i = 1:100
     th1(i) = theta1(t(i));
     th2(i) = theta2(t(i));
     th_a(i) = theta_a(t(i));
+    Q_te(i) = Q(t(i));
 end
 
 figure
@@ -61,3 +62,6 @@ plot(t,th2);
 
 figure
 plot(t,th_a);
+
+figure
+plot(t,Q_te);

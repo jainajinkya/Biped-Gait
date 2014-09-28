@@ -1,6 +1,6 @@
 function maxParameters(Ls)
 
-global l1 l2 l3 l4 l5 tm td x_e Vc phi_max theta1_max theta2_max theta_a_min Qmax % List of all Parameters used in the workspace
+global l1 l2 l3 l4 l5 tm td x_e Vc phi_max theta1_max theta2_max theta_a_min Q_max % List of all Parameters used in the workspace
 
 Vc = Ls/tm ; 
 

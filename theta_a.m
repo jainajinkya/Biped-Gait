@@ -2,8 +2,6 @@ function theta_a_val = theta_a(t)
 
 global td tm theta_a_min
 
-% theta_a_val = acos((x_e(3)+(l1+l2)*cos(phi_val) - l2*cos(theta1_val) - l1*cos(theta2_val))/l3);
-
 if(t<=td/2)
     a0 = pi/2;
     a1 = 0 ;
