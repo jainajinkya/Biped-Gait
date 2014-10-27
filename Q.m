@@ -2,6 +2,8 @@ function Q_val = Q(t)
 
 global td tm Q_max
 
+t = t - floor(t/tm)*tm ;
+
 if(t<=td/2)
     a0 = 0;
     a1 = -2*Q_max/td ;

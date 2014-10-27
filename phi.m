@@ -1,6 +1,9 @@
 function phi_val = phi(t)
 
 global l1 l2 tm Vc phi_max
+
+t = t - floor(t/tm)*tm ;
+
 a0 = phi_max;
 a1 = 0;
 a2 = -6*phi_max/tm^2;
