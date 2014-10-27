@@ -1,6 +1,6 @@
 function maxParameters(Ls)
 
-global l1 l2 l3 l4 l5 tm td x_e Vc phi_max theta1_max theta2_max theta_a_min Q_max % List of all Parameters used in the workspace
+global l1 l2 l3 l4 l5 tm td x_ori Vc phi_max theta1_max theta2_max theta_a_min Q_max % List of all Parameters used in the workspace
 
 Vc = Ls/tm ; 
 
@@ -17,6 +17,6 @@ C = l1^2 + ((l1+l2)*cos(phi_d) - l2*cos(theta1_max))^2 + (l3 + (l1+l2)*sin(phi_m
 P = atan2(B,A);
 theta2_max = P + acos(C/sqrt(A^2 + B^2));
 
-theta_a_min = acos((x_e(3)+(l1+l2)*cos(phi_d) - l2*cos(theta1_max) - l1*cos(theta2_max))/l3);
+theta_a_min = acos((x_ori(3)+(l1+l2)*cos(phi_d) - l2*cos(theta1_max) - l1*cos(theta2_max))/l3);
 
 end

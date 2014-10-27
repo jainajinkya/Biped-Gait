@@ -1,7 +1,7 @@
 function theta_a_val = theta_a(t)
 
 global td tm theta_a_min
-
+t = t - floor(t/tm)*tm ;
 if(t<=td/2)
     a0 = pi/2;
     a1 = 0 ;

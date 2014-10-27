@@ -1,7 +1,7 @@
 function theta2_val = theta2(t)
 
 global tm td theta1_max theta2_max
-
+t = t - floor(t/tm)*tm ;
 % if(t<=td/2 || (t>tm && t<=(tm+td/2)))
 if(t<=td/2)
     a0 = 2*(theta1_max-theta2_max)*(t/td)  - theta1_max;

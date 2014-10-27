@@ -3,6 +3,8 @@ function theta1_val = theta1(t)
 global tm td theta1_max
 
 % if(t<=td/2 || (t>tm && t<=(tm+td/2)))
+t = t - floor(t/tm)*tm ;
+
 if(t<=td/2)
     a0 = -theta1_max;
     a1 = 0;
