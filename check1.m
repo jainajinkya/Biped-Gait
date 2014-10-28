@@ -52,18 +52,18 @@ for i=1:length(t)
     L1 = makeLine([x_c(i,1) x_c(i,3)],[x_b(i,1) x_b(i,3)]);
     L2 = makeLine([x_b(i,1) x_b(i,3)],[x_a(i,1) x_a(i,3)]);
     L3 = makeLine([x_a(i,1) x_a(i,3)],[x_p(i,1) x_p(i,3)]);
-    h1 = plot(L1(:,1),L1(:,2),'o');
-    h2 = plot(L2(:,1),L2(:,2),'o');
-    h3 = plot(L3(:,1),L3(:,2),'o');
+    h1 = plot(L1(:,1),L1(:,2));
+    h2 = plot(L2(:,1),L2(:,2));
+    h3 = plot(L3(:,1),L3(:,2));
 
 
     % Static Leg
     L4 = makeLine([x_d(i,1) x_d(i,3)],[x_c(i,1) x_c(i,3)]);
     L5 = makeLine([x_e(i,1) x_e(i,3)],[x_d(i,1) x_d(i,3)]);
     L6 = makeLine([x_e(i,1) x_e(i,3)],[x_q(i,1) x_q(i,3)]);
-    h4 = plot(L4(:,1),L4(:,2),['r','o']);
-    h5 = plot(L5(:,1),L5(:,2),['r','o']);
-    h6 = plot(L6(:,1),L6(:,2),['r','o']);
+    h4 = plot(L4(:,1),L4(:,2),['r']);
+    h5 = plot(L5(:,1),L5(:,2),['r']);
+    h6 = plot(L6(:,1),L6(:,2),['r']);
 
     pause(0.3);
     F = getframe;
