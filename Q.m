@@ -1,7 +1,7 @@
 function Q_val = Q(t)
 global td tm Q_max
 
-% t = t - floor(t/tm)*tm ;
+t = t - floor(t/(2*tm))*(2*tm) ;   %2*tm i sused instead of tm cause the total time after which the cycle should repeat is 2*tm and not tm
 
 if(t<=td/2)
     a0 = 0;

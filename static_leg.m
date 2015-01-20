@@ -1,10 +1,21 @@
-function [x_e, x_d, x_c2, x_q, x_c] = static_leg(phi_val,Q_val,t)
+function [x_e, x_d, x_c2, x_q, x_c] = static_leg(phi_val,Q_val,x_a,t)
 
-global l1 l2 l3 l5 tm x_ori
+global l1 l2 l3 l5 tm Ls x_ori t_div
 
 %% Factors correlating the Sagittal and Frontal Planes
 Kc = cos(phi_val)/cos(Q_val);
 Kd = cos(phi_val)/cos(Q_val);
+
+ %% Updation in x_origin
+step_no = round(t/(tm));
+
+
+if((mod(t,tm)== t_div) && step_no)
+  x_ori(1) = x_ori(1) + Ls*step_no; 
+end
+
+t = t - step_no*tm ;
+
 
 %%
 x_q = x_ori;
@@ -24,14 +35,14 @@ x_d(3) = x_ori(3) + (l1)*cos(phi_val);
 %% Frontal Plane
 
 
-if(t<=tm)
+if(~rem(step_no,2))
     x_c2(2) = x_ori(2) - Kc*(l1+l2)*sin(Q_val) + l5/2;
     x_c(2) = x_ori(2) - Kc*(l1+l2)*sin(Q_val);
     x_d(2) = x_ori(2) - Kd*l1*sin(Q_val) + l5/2;
     x_e(2) = x_ori(2) + l5/2;
     x_q(2) = x_e(2);
     
-elseif(t>tm)
+elseif(rem(step_no,2))
     x_c2(2) = x_ori(2) - Kc*(l1+l2)*sin(Q_val) - l5/2 ;
     x_c(2) = x_ori(2) - Kc*(l1+l2)*sin(Q_val) ;
     x_d(2) = x_ori(2) - Kd*l1*sin(Q_val) - l5/2 ;
