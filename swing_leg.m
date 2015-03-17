@@ -5,6 +5,7 @@ global l1 l2 l3 l4 l5 tm x_ori
 %% Factors correlating the Sagittal and Frontal Planes
 Kd = cos(phi_val)/cos(Q_val);
 
+t_multi = floor(t/tm);
 %theta_a = acos((x_ori(3)+(l1+l2)*cos(phi)-l2*cos(theta1)-l1*cos(theta2))/l3)
 
 %% Sagittal Plane
@@ -22,13 +23,13 @@ x_p(3) = x_a(3) - l3*cos(theta_a_val); % find x_p using x_a always...define trje
 
 %% Frontal plane
 
-if(t<=tm)
+if(rem(t_multi,2)== 0)
     x_b(2) = x_ori(2) - Kd*l1*sin(Q_val) - (l5)/2; % trajectory of Q will handle the appropriate variations
     x_c1(2) = x_ori(2) - Kd*(l1+l2)*sin(Q_val) - (l5/2);
     x_a(2) = x_ori(2) - (l5)/2;
     x_p(2) = x_ori(2) - (l5)/2;
     
-elseif(t>tm)
+elseif(rem(t_multi,2)== 1)
     x_b(2) = x_ori(2) - Kd*l1*sin(Q_val) + (l5)/2;
     x_c1(2) = x_ori(2) - Kd*(l1+l2)*sin(Q_val) + (l5)/2;
     x_a(2) = x_ori(2) + (l5)/2;
