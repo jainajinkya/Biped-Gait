@@ -2,7 +2,9 @@ function phi_val = phi(t)
 
 global l1 l2 tm Vc phi_max
 
-t = t - floor(t/tm)*tm ;
+if(~strcmp(class(t),'sym'))
+    t = t - floor(t/tm)*tm ;
+end
 
 a0 = phi_max;
 a1 = 0;

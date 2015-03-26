@@ -1,7 +1,15 @@
 function theta_a_val = theta_a(t)
 
 global td tm theta_a_min
-t = t - floor(t/tm)*tm ;
+
+if(strcmp(class(t),'sym'))
+    syms a0 a1 a2 a3
+    theta_a_val = a0 + a1*t + a2*t^2 + a3*t^3;
+    
+else
+    t = t - floor(t/tm)*tm ;
+
+
 if(t<=td/2)
     a0 = pi/2;
     a1 = 0 ;
@@ -22,5 +30,5 @@ else
 end
 
 theta_a_val = a0 + a1*t + a2*t^2 + a3*t^3;
-
+end
 end

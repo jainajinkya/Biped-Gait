@@ -1,9 +1,15 @@
 function theta2_val = theta2(t)
 
 global tm td theta1_max theta2_max
-t = t - floor(t/tm)*tm ;
-% if(t<=td/2 || (t>tm && t<=(tm+td/2)))
-if(t<=td/2)
+
+if(strcmp(class(t),'sym'))
+    syms a0 a1 a2 a3
+    theta2_val = a0 + a1*t + a2*t^2 + a3*t^3;
+    
+else
+    t = t - floor(t/tm)*tm ;
+
+    if(t<=td/2)
     a0 = 2*(theta1_max-theta2_max)*(t/td)  - theta1_max;
     a1 = 0;
     a2 = 0;
@@ -23,5 +29,5 @@ else
 end
 
 theta2_val = a0 + a1*t + a2*t^2 + a3*t^3;
-
+end
 end
