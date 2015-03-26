@@ -2,7 +2,7 @@ clear all
 close all
 clc
 
-global l1 l2 l3 l4 l5 tm td Ls x_ori t_resol Vc phi_max theta1_max theta2_max Q_max
+global l1 l2 l3 l4 l5 tm td Ls x_ori t_resol % other global variable Vc, phi_max, theta1_max, theta2_max, Q_max
 l1 = 0.45;
 l2 = 0.45;
 l3 = 0.15;
@@ -15,7 +15,6 @@ Ls = 0.5;
 
 maxParameters();
 
-% t = linspace(0,10*tm);
 %% Generating time points
 t_req = 10*tm;
 t_resol = 10;
@@ -30,9 +29,6 @@ x_a = zeros(length(t),3);
 
 %% Simulations
 for i = 1:length(t)
-%     if((t(i)>tm) && ~isequal(x_ori,x_a(length(t)/2,:)))
-%         x_ori(1) = x_a(length(t)/2,1);
-%     end
     step_inc = 0;
     phi_val = phi(t(i)) ;
     theta1_val = theta1(t(i));
@@ -49,10 +45,11 @@ for i = 1:length(t)
     [x_e(i,:), x_d(i,:), x_c2(i,:), x_q(i,:) ,x_c(i,:)] = static_leg(phi_val,Q_val,t(i),step_inc);
     [x_a(i,:), x_b(i,:), x_c1(i,:), x_p(i,:)] = swing_leg(phi_val,theta1_val,theta2_val,the_a_val,Q_val,t(i));
     [x_zmp(i,:), res] = stable(phi_val,Q_val);
-%     plot(x_zmp(:,1), x_zmp(:,2));
-%     pause(0.2);
 end
 
+
+
+%% Plotting
 
 % Video for Sagittal Plane
 figure
