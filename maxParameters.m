@@ -9,7 +9,7 @@ phi_max = asin(Ls/(2*(l1+l2)));
 theta1_max = phi_max;
 % theta1_max = 0.5*Hvel*(tm-td);
 
-phi_d = phi(td);
+phi_d = phi(td,'val');
 A = 2*l1*((l1+l2)*cos(phi_d) - l2*cos(theta1_max));
 B = 2*l1*(l3 + (l1+l2)*sin(phi_max) + l2*sin(theta1_max) - Ls);
 C = l1^2 + ((l1+l2)*cos(phi_d) - l2*cos(theta1_max))^2 + (l3 + (l1+l2)*sin(phi_max) + l2*sin(theta1_max) - Ls)^2 - l3^2;

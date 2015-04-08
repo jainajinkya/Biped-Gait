@@ -1,13 +1,15 @@
-function theta1_val = theta1(t)
+function theta1_val = theta1(t, type)
 
 global tm td theta1_max
 
-if(strcmp(class(t),'sym'))
-    syms a0 a1 a2 a3
-    theta1_val = a0 + a1*t + a2*t^2 + a3*t^3;
+% if(strcmp(class(t),'sym'))
+%     syms a0 a1 a2 a3
+%     theta1_val = a0 + a1*t + a2*t^2 + a3*t^3;
+% 
+% else
+%     t = t - floor(t/tm)*tm ;
 
-else
-    t = t - floor(t/tm)*tm ;
+t = t - floor(t/tm)*tm ;
 
 if(t<=td/2)
     a0 = -theta1_max;
@@ -28,6 +30,10 @@ else
     a2 = -(6*theta1_max*tm)/((td - tm)*(td^2 - 2*td*tm + tm^2));
     a3 = (4*theta1_max)/((td - tm)*(td^2 - 2*td*tm + tm^2));
 end
-theta1_val = a0 + a1*t + a2*t^2 + a3*t^3;
+
+if(strcmp(type, 'char'))
+    syms t
 end
+
+theta1_val = a0 + a1*t + a2*t^2 + a3*t^3;
 end

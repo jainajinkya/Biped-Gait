@@ -16,7 +16,7 @@ Ls = 0.5;
 maxParameters();
 
 %% Generating time points
-t_req = 10*tm;
+t_req = 4*tm;
 t_resol = 10;
 t_div = tm/t_resol;
 t= [t_div];
@@ -30,11 +30,11 @@ x_a = zeros(length(t),3);
 %% Simulations
 for i = 1:length(t)
     step_inc = 0;
-    phi_val = phi(t(i)) ;
-    theta1_val = theta1(t(i));
-    theta2_val = theta2(t(i));
-    Q_val = Q(t(i));
-    the_a_val = theta_a(t(i));
+    phi_val = phi(t(i), 'val') ;
+    theta1_val = theta1(t(i), 'val');
+    theta2_val = theta2(t(i), 'val');
+    Q_val = Q(t(i), 'val');
+    the_a_val = theta_a(t(i), 'val');
     
     if(i>11 && rem(i,t_resol)==0)
         step_inc = 1;
@@ -48,48 +48,51 @@ for i = 1:length(t)
 end
 
 
+for i = 1:length(t)
+    torques(i,:) = dyna_eqn(t(i));% Rectify the input
+end
 
 %% Plotting
 
-% Video for Sagittal Plane
-figure
-hold on
-pause(2);
-axis( [-0.8 6 -0.05 1]);
-
-ax = gca;
-% ax.NextPlot = 'replaceChildren';
-
-% vidObj = VideoWriter('Biped-gait.avi');
-% vidObj.FrameRate= 10;
-% open(vidObj);
-
-for i=1:length(t)
-    % Swing Leg
-    L1 = makeLine([x_c(i,1) x_c(i,3)],[x_b(i,1) x_b(i,3)]);
-    L2 = makeLine([x_b(i,1) x_b(i,3)],[x_a(i,1) x_a(i,3)]);
-    L3 = makeLine([x_a(i,1) x_a(i,3)],[x_p(i,1) x_p(i,3)]);
-    h1 = plot(L1(:,1),L1(:,2));
-    h2 = plot(L2(:,1),L2(:,2));
-    h3 = plot(L3(:,1),L3(:,2));
-
-
-    % Static Leg
-    L4 = makeLine([x_d(i,1) x_d(i,3)],[x_c(i,1) x_c(i,3)]);
-    L5 = makeLine([x_e(i,1) x_e(i,3)],[x_d(i,1) x_d(i,3)]);
-    L6 = makeLine([x_e(i,1) x_e(i,3)],[x_q(i,1) x_q(i,3)]);
-    h4 = plot(L4(:,1),L4(:,2),['r']);
-    h5 = plot(L5(:,1),L5(:,2),['r']);
-    h6 = plot(L6(:,1),L6(:,2),['r']);
-
-    pause(0.3);
-%     F = getframe;
-%     writeVideo(vidObj,F);
-    delete(h1,h2,h3,h4,h5,h6);
-
-end
-% close(vidObj);
-close
+% % Video for Sagittal Plane
+% figure
+% hold on
+% pause(2);
+% axis( [-0.8 6 -0.05 1]);
+% 
+% ax = gca;
+% % ax.NextPlot = 'replaceChildren';
+% 
+% % vidObj = VideoWriter('Biped-gait.avi');
+% % vidObj.FrameRate= 10;
+% % open(vidObj);
+% 
+% for i=1:length(t)
+%     % Swing Leg
+%     L1 = makeLine([x_c(i,1) x_c(i,3)],[x_b(i,1) x_b(i,3)]);
+%     L2 = makeLine([x_b(i,1) x_b(i,3)],[x_a(i,1) x_a(i,3)]);
+%     L3 = makeLine([x_a(i,1) x_a(i,3)],[x_p(i,1) x_p(i,3)]);
+%     h1 = plot(L1(:,1),L1(:,2));
+%     h2 = plot(L2(:,1),L2(:,2));
+%     h3 = plot(L3(:,1),L3(:,2));
+% 
+% 
+%     % Static Leg
+%     L4 = makeLine([x_d(i,1) x_d(i,3)],[x_c(i,1) x_c(i,3)]);
+%     L5 = makeLine([x_e(i,1) x_e(i,3)],[x_d(i,1) x_d(i,3)]);
+%     L6 = makeLine([x_e(i,1) x_e(i,3)],[x_q(i,1) x_q(i,3)]);
+%     h4 = plot(L4(:,1),L4(:,2),['r']);
+%     h5 = plot(L5(:,1),L5(:,2),['r']);
+%     h6 = plot(L6(:,1),L6(:,2),['r']);
+% 
+%     pause(0.3);
+% %     F = getframe;
+% %     writeVideo(vidObj,F);
+%     delete(h1,h2,h3,h4,h5,h6);
+% 
+% end
+% % close(vidObj);
+% close
 
 
 % 
@@ -140,14 +143,14 @@ close
 % %% Angular Plotting
 % 
 % for i = 1:length(t)
-%     ph(i)  = phi(t(i))
-%     th1(i) = theta1(t(i));
-%     th2(i) = theta2(t(i));
-%     th_a(i) = theta_a(t(i));
-%     Q_te(i) = Q(t(i));
+%     ph(i)  = phi(t(i),'val')
+%     th1(i) = theta1(t(i),'val');
+%     th2(i) = theta2(t(i),'val');
+%     th_a(i) = theta_a(t(i),'val');
+%     Q_te(i) = Q(t(i),'val');
 % end
-% %
-% 
+%
+
 % close
 % figure
 % plot(t,ph);

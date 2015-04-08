@@ -1,13 +1,14 @@
-function theta_a_val = theta_a(t)
+function theta_a_val = theta_a(t,type)
 
 global td tm theta_a_min
 
-if(strcmp(class(t),'sym'))
-    syms a0 a1 a2 a3
-    theta_a_val = a0 + a1*t + a2*t^2 + a3*t^3;
-    
-else
-    t = t - floor(t/tm)*tm ;
+% if(strcmp(class(t),'sym'))
+%     syms a0 a1 a2 a3
+%     theta_a_val = a0 + a1*t + a2*t^2 + a3*t^3;
+%
+% else
+
+t = t - floor(t/tm)*tm ;
 
 
 if(t<=td/2)
@@ -29,6 +30,8 @@ else
     a3 = (8*(pi - 2*theta_a_min))/td^3 ;
 end
 
-theta_a_val = a0 + a1*t + a2*t^2 + a3*t^3;
+if(strcmp(type, 'char'))
+    syms t
 end
+theta_a_val = a0 + a1*t + a2*t^2 + a3*t^3;
 end
