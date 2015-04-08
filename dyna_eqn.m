@@ -2,7 +2,7 @@
 function torque = dyna_eqn(t_val)
 syms sym_phi sym_phi_dot the1 the1_dot the2 the2_dot the_a the_a_dot sym_Q sym_Q_dot t
 % syms t
-% 
+%
 sym_phi_val = phi(t_val,'char');
 the1_val = theta1(t_val,'char');
 the2_val = theta2(t_val,'char');
@@ -57,12 +57,12 @@ KE4 = (0.5)*m4*((sym_phi_dot*(l1 + l2))^2 + (sym_Q_dot*(l1 + l2)*cos(sym_phi))^2
 KE5 = (0.5)*m5*((sym_phi_dot*(l1 + l2)*cos(sym_phi) + the1_dot*l2*0.5*cos(the1))^2 + (sym_phi_dot*(l1 + l2)*sin(sym_phi) + the1_dot*l2*0.5*sin(the1))^2 ...
     +(sym_Q_dot*(l1 + l2)*cos(sym_phi))^2) + (1/2)*Iyy5*the1_dot^2 + (1/2)*Ixx5*sym_Q_dot^2;
 KE6 = (0.5)*m6*((sym_phi_dot*(l1 + l2)*cos(sym_phi) + the1_dot*l2*0.5*cos(the1)+ the2_dot*l1*0.5*cos(the2))^2 + ...
-        (sym_phi_dot*(l1 + l2)*sin(sym_phi) + the1_dot*l2*0.5*sin(the1)+ the2_dot*l1*0.5*sin(the2))^2 +...
-        (sym_Q_dot*0.5*(l1 - l2)*cos(sym_phi))^2) + (1/2)*Iyy6*the2_dot^2 + (1/2)*Ixx6*sym_Q_dot^2;
+    (sym_phi_dot*(l1 + l2)*sin(sym_phi) + the1_dot*l2*0.5*sin(the1)+ the2_dot*l1*0.5*sin(the2))^2 +...
+    (sym_Q_dot*0.5*(l1 - l2)*cos(sym_phi))^2) + (1/2)*Iyy6*the2_dot^2 + (1/2)*Ixx6*sym_Q_dot^2;
 KE7 = (0.5)*m7*((sym_phi_dot*(l1 + l2)*cos(sym_phi) + the1_dot*l2*0.5*cos(the1)+ the2_dot*l1*0.5*cos(the2) + the_a_dot*0.5*l3*cos(the_a))^2 + ...
-        (sym_phi_dot*(l1 + l2)*sin(sym_phi) + the1_dot*l2*0.5*sin(the1)+ the2_dot*l1*0.5*sin(the2) + the_a_dot*0.5*l3*sin(the_a))^2 +...
-        (sym_Q_dot*0.5*(l1 - l2)*cos(sym_phi))^2) + (1/2)*Iyy7*the2_dot^2 + (1/2)*Ixx7*the_a_dot^2;
-    
+    (sym_phi_dot*(l1 + l2)*sin(sym_phi) + the1_dot*l2*0.5*sin(the1)+ the2_dot*l1*0.5*sin(the2) + the_a_dot*0.5*l3*sin(the_a))^2 +...
+    (sym_Q_dot*0.5*(l1 - l2)*cos(sym_phi))^2) + (1/2)*Iyy7*the2_dot^2 + (1/2)*Ixx7*the_a_dot^2;
+
 
 %% Potential Energies
 PE1 = 0;
@@ -93,43 +93,50 @@ dL_dQ_dot      = deriv(Lagrag,'sym_Q_dot');
 
 % Derivatives now function of time
 dL_dphi = subs(dL_dphi, [sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
-                [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
+    [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
 dL_dthe1 = subs(dL_dthe1, [sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
-                [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
+    [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
 dL_dthe2 = subs(dL_dthe2, [sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
-                [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
+    [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
 dL_dthe_a = subs(dL_dthe_a, [sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
-                [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
+    [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
 dL_dQ  = subs(dL_dQ , [sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
-                [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
+    [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
 dL_dphi_dot = subs(dL_dphi_do, [sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
-                [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
+    [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
 dL_dthe1_dot = subs(dL_dthe1_dot, [sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
-                [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
+    [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
 dL_dthe2_dot = subs(dL_dthe2_dot, [sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
-                [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
+    [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
 dL_dthe_a_dot = subs(dL_dthe_a_dot, [sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
-                [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
+    [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
 dL_dQ_dot = subs(dL_dQ_dot, [sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
-                [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
-
-            
-% Derivative wrt time
-
-ddL_dphi_dot_dt = deriv(dL_dphi_dot, 't');
-ddL_dthe1_dot_dt = deriv(dL_dthe1_dot, 't');
-ddL_dthe2_dot_dt = deriv(dL_dthe2_dot, 't');
-ddL_dthe_a_dot_dt = deriv(dL_dthe_a_dot, 't');
-ddL_dQ_dot_dt = deriv(dL_dQ_dot, 't');
+    [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val, sym_Q_val, sym_Q_dot_val]);
 
 
-%% Equations
-dL_dq = [dL_dphi, dL_dthe1, dL_dthe2, dL_dthe_a, dL_dQ]';
-ddL_dq_dt = [ddL_dphi_dot_dt, ddL_dthe1_dot_dt, ddL_dthe2_dot_dt, ddL_dthe_a_dot_dt, ddL_dQ_dot_dt]';
+%%
+dL_dq_1 = [dL_dphi, dL_dthe1, dL_dthe2, dL_dthe_a, dL_dQ]';
+dL_dq =   eval(subs(dL_dq_1, t, t_val))
 
-sym_tau = ddL_dq_dt - dL_dq;
 
-tau =   eval(subs(sym_tau, t, t_val));
 
-torque = [tau(4),tau(5), tau(3), 0, tau(2), 0, 0, 0, 0, 0, tau(1),tau(5)]';
+%%
+% % Derivative wrt time
+% ddL_dphi_dot_dt = deriv(dL_dphi_dot, 't');
+% ddL_dthe1_dot_dt = deriv(dL_dthe1_dot, 't');
+% ddL_dthe2_dot_dt = deriv(dL_dthe2_dot, 't');
+% ddL_dthe_a_dot_dt = deriv(dL_dthe_a_dot, 't');
+% ddL_dQ_dot_dt = deriv(dL_dQ_dot, 't');
+% 
+% 
+% %% Equations
+% dL_dq = [dL_dphi, dL_dthe1, dL_dthe2, dL_dthe_a, dL_dQ]';
+% ddL_dq_dt = [ddL_dphi_dot_dt, ddL_dthe1_dot_dt, ddL_dthe2_dot_dt, ddL_dthe_a_dot_dt, ddL_dQ_dot_dt]';
+% 
+% sym_tau = ddL_dq_dt - dL_dq;
+% 
+% % tau =   eval(subs(sym_tau, t, t_val));
+% 
+% torque = [tau(4),tau(5), tau(3), 0, tau(2), 0, 0, 0, 0, 0, tau(1),tau(5)]';
+torque = [1,1,1,1];
 end
