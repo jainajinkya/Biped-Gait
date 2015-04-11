@@ -30,6 +30,11 @@ else
     a3 = (2*(2*td*theta1_max - theta1_max*tm + theta2_max*tm))/(td*(td - tm)*(td^2 - 2*td*tm + tm^2));
 end
 
+% if(strcmp(type, 'char'))
+%     syms t
+% end
+% 
+% theta2_val = a0 + a1*t + a2*t^2 + a3*t^3;
 if(strcmp(type, 'char'))
     syms t
 end

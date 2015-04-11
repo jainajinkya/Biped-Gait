@@ -22,7 +22,7 @@ t_div = tm/t_resol;
 t= [t_div];
 
 for i=1:(t_req/t_div)-1
-     t(i+1,1) = t(i,1) + t_div;
+    t(i+1,1) = t(i,1) + t_div;
 end
 
 x_a = zeros(length(t),3);
@@ -52,6 +52,9 @@ for i = 1:length(t)
     torques(i,:) = dyna_eqn(t(i));% Rectify the input
 end
 
+torques
+% plot(t,torques);
+
 %% Plotting
 
 % % Video for Sagittal Plane
@@ -59,14 +62,14 @@ end
 % hold on
 % pause(2);
 % axis( [-0.8 6 -0.05 1]);
-% 
+%
 % ax = gca;
 % % ax.NextPlot = 'replaceChildren';
-% 
+%
 % % vidObj = VideoWriter('Biped-gait.avi');
 % % vidObj.FrameRate= 10;
 % % open(vidObj);
-% 
+%
 % for i=1:length(t)
 %     % Swing Leg
 %     L1 = makeLine([x_c(i,1) x_c(i,3)],[x_b(i,1) x_b(i,3)]);
@@ -75,8 +78,8 @@ end
 %     h1 = plot(L1(:,1),L1(:,2));
 %     h2 = plot(L2(:,1),L2(:,2));
 %     h3 = plot(L3(:,1),L3(:,2));
-% 
-% 
+%
+%
 %     % Static Leg
 %     L4 = makeLine([x_d(i,1) x_d(i,3)],[x_c(i,1) x_c(i,3)]);
 %     L5 = makeLine([x_e(i,1) x_e(i,3)],[x_d(i,1) x_d(i,3)]);
@@ -84,32 +87,32 @@ end
 %     h4 = plot(L4(:,1),L4(:,2),['r']);
 %     h5 = plot(L5(:,1),L5(:,2),['r']);
 %     h6 = plot(L6(:,1),L6(:,2),['r']);
-% 
+%
 %     pause(0.3);
 % %     F = getframe;
 % %     writeVideo(vidObj,F);
 %     delete(h1,h2,h3,h4,h5,h6);
-% 
+%
 % end
 % % close(vidObj);
 % close
 
 
-% 
+%
 % %% Video for frontal plane
 % figure
 % hold on
 % pause(1);
 % axis( [-0.8 0.8 -0.05 1]);
-% 
+%
 % ax = gca;
 % ax.NextPlot = 'replaceChildren';
-% % 
+% %
 % % vidObj1 = VideoWriter('Biped-gait-frontal.avi');
 % % vidObj1.FrameRate= 10;
 % % open(vidObj1);
-% % 
-% % 
+% %
+% %
 % for i=1:length(t)
 %     %Swing Leg
 %     L1 = makeLine([x_c1(i,2) x_c1(i,3)],[x_b(i,2) x_b(i,3)]);
@@ -120,7 +123,7 @@ end
 %     h2 = plot(L2(:,1),L2(:,2), ['b' 'o']);
 %     h3 = plot(L3(:,1),L3(:,2), ['b' 'o']);
 %     h7 = plot(L7(:,1),L7(:,2), ['b' 'o']);
-%     
+%
 %     %Static Leg
 %     L4 = makeLine([x_d(i,2) x_d(i,3)],[x_c2(i,2) x_c2(i,3)]);
 %     L5 = makeLine([x_e(i,2) x_e(i,3)],[x_d(i,2) x_d(i,3)]);
@@ -130,44 +133,44 @@ end
 %     h5 = plot(L5(:,1),L5(:,2),['r' 'o']);
 %     h6 = plot(L6(:,1),L6(:,2),['r' 'o']);
 %     h8 = plot(L8(:,1),L8(:,2),['r' 'o']);
-%     
+%
 %     pause(0.3);
 % %     F = getframe;
 % %     writeVideo(vidObj1,F);
 %     delete(h1,h2,h3,h4,h5,h6,h7,h8);
-%     
+%
 % end
 % % close(vidObj1);
 
 
 % %% Angular Plotting
-% 
+% %
 % for i = 1:length(t)
-%     ph(i)  = phi(t(i),'val')
+%     ph(i)  = phi(t(i),'val');
 %     th1(i) = theta1(t(i),'val');
 %     th2(i) = theta2(t(i),'val');
 %     th_a(i) = theta_a(t(i),'val');
 %     Q_te(i) = Q(t(i),'val');
 % end
-%
 
-% close
+%
+% % close
 % figure
-% plot(t,ph);
+% plot(t,(ph));
 % title('plot of phi');
-% 
+
 % figure
 % plot(t,th1);
 % title('plot of theta-1');
-% 
+
 % figure
 % plot(t,th2);
 % title('plot of theta-2');
-% 
+
 % figure
 % plot(t,th_a);
 % title('plot of theta-a');
-% 
+
 % figure
 % plot(t,Q_te);
 % title('plot of Q');

@@ -14,10 +14,17 @@ if(t<=td/2)
     a2 = 0;
     a3 = (4*Q_max)/td^3;
     
+    %         if(strcmp(type, 'char'))
+    %             syms t
+    %         end
+    %         Q_val = a0 + a1*t + a2*t^2 + a3*t^3;
     if(strcmp(type, 'char'))
-        syms t
+        syms t1
+        Q_val = a0 + a1*t1 + a2*t1^2 + a3*t1^3;
+    else
+        Q_val = a0 + a1*t + a2*t^2 + a3*t^3;
     end
-    Q_val = a0 + a1*t + a2*t^2 + a3*t^3;
+    
     
 elseif(t>td/2 && t<=(tm-td/2))
     Q_val = -Q_max;
@@ -32,10 +39,19 @@ elseif(t>(tm-td/2) && t<=(tm+td/2))
     a2 = 0;
     a3 = -(4*Q_max)/td^3;
     
+    %         if(strcmp(type, 'char'))
+    %             syms t
+    %         end
+    %         Q_val = a0 + a1*(t-tm) + a2*(t-tm)^2 + a3*(t-tm)^3;
+    
     if(strcmp(type, 'char'))
-        syms t
+        syms t1
+        %         Q_val = a0 + a1*(t - floor(t/(2*tm))*(2*tm) - tm) + a2*(t - floor(t/(2*tm))*(2*tm) - tm)^2 + a3*(t - floor(t/(2*tm))*(2*tm) - tm)^3;
+        Q_val = a0 + a1*(t1-tm) + a2*(t1-tm)^2 + a3*(t1-tm)^3;
+    else
+        Q_val = a0 + a1*(t-tm) + a2*(t-tm)^2 + a3*(t-tm)^3;
     end
-    Q_val = a0 + a1*(t-tm) + a2*(t-tm)^2 + a3*(t-tm)^3;
+    %
     
 elseif(t>(tm+td/2) && t<=(2*tm - td/2))
     Q_val = Q_max;
@@ -47,7 +63,16 @@ elseif(t>(2*tm - td/2) && t<=(2*tm))
     a3 = (4*Q_max)/td^3;
     
     if(strcmp(type, 'char'))
-        syms t
+        syms t1
+        Q_val = a0 + a1*(t1-2*tm) + a2*(t1-2*tm)^2 + a3*(t1-2*tm)^3;
     end
     Q_val = a0 + a1*(t-2*tm) + a2*(t-2*tm)^2 + a3*(t-2*tm)^3;
+    
+    %     if(strcmp(type, 'char'))
+    %         syms t
+    %         Q_val = a0 + a1*(t - floor(t/(2*tm))*(2*tm) - 2*tm) + a2*(t - floor(t/(2*tm))*(2*tm) - 2*tm)^2 + a3*(t - floor(t/(2*tm))*(2*tm) - 2*tm)^3;
+    %     else
+    %         Q_val = a0 + a1*(t-2*tm) + a2*(t-2*tm)^2 + a3*(t-2*tm)^3;
+    %     end
+    
 end

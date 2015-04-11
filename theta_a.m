@@ -30,8 +30,15 @@ else
     a3 = (8*(pi - 2*theta_a_min))/td^3 ;
 end
 
+% if(strcmp(type, 'char'))
+%     syms t
+% end
+% theta_a_val = a0 + a1*t + a2*t^2 + a3*t^3;
+
 if(strcmp(type, 'char'))
-    syms t
+    syms t  
 end
+
 theta_a_val = a0 + a1*t + a2*t^2 + a3*t^3;
+
 end

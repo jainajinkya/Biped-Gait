@@ -14,10 +14,16 @@ a3 = 4*phi_max/tm^3;
 %     t = t - floor(t/tm)*tm ;
 % end
 
+% if (strcmp(type,'char'))
+%     syms t
+%     phi_val = a0 + a1*(t - floor(t/tm)*tm) + a2*(t - floor(t/tm)*tm) ^2 + a3*(t - floor(t/tm)*tm) ^3;
+% else
+%     phi_val = a0 + a1*t + a2*t^2 + a3*t^3;
+% end
+
 if (strcmp(type,'char'))
     syms t
 end
-
-phi_val = a0 + a1*t + a2*t^2 + a3*t^3;
+    phi_val = a0 + a1*t + a2*t^2 + a3*t^3;
 
 end
