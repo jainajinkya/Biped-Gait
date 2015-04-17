@@ -54,7 +54,7 @@ end
 
 %% Point to consider: The torque values must be for eah leg. Supply the angular values separately for each leg. 
 
-torques(1:5,:)
+torques
 % plot(t,torques);
 
 %% Plotting
