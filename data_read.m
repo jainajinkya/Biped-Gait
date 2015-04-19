@@ -1,5 +1,6 @@
 %% LifeMOD Data file for Actual Reference Model
 clear all
+close all
 clc
 cd LifeMOD_data
 % fid = fopen('Gait_LowerBody.rtf', 'rb');
@@ -18,7 +19,7 @@ cd LifeMOD_data
 % % A = textscan(fID,'%s');
 % tline = fgets(fID);
 
-A = xlsread('Gait_LowerBody.xlsx');
+P = xlsread('Gait_LowerBody2.xlsx');
 % data = zeros(1,4);
 COM = [];
 COM1 = [];
@@ -31,6 +32,13 @@ Rtoe = [];
 Ltoe = [];
 j = 1;
 B = [1,2,4,6,8,9,11,13,15];
+
+data_A = [P(:,3:5),ones(size(P,1),1)];
+Rot = [cos(0.7526), 0, -sin(0.7526), 0; 0, 1, 0, 0; sin(0.7526), 0, cos(0.7526), 57.15; 1, 1, 1, 1];
+dummy_A = Rot*data_A';
+A = P;
+dummy_A = dummy_A';
+A(:,3:5) = dummy_A(:,1:3);
 
 for i = 1:size(A,1)
     if(A(i,2)==1)
@@ -61,7 +69,6 @@ for i = 1:size(A,1)
         Ltoe = [Ltoe; A(i,1), A(i,3:5)];
     end
 end
-
+cd ..
 save('lifemod_data.mat', 'COM', 'COM1', 'COM2', 'RKnee', 'LKnee', 'RAnk', 'LAnk', 'Rtoe', 'Ltoe')
 % fclose(fid);
-cd ..
