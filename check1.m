@@ -17,7 +17,7 @@ maxParameters();
 
 %% Generating time points
 t_req = 4*tm;
-t_resol = 10;
+t_resol = 100;
 t_div = tm/t_resol;
 t= [t_div];
 
@@ -44,17 +44,18 @@ for i = 1:length(t)
     
     [x_e(i,:), x_d(i,:), x_c2(i,:), x_q(i,:) ,x_c(i,:)] = static_leg(phi_val,Q_val,t(i),step_inc);
     [x_a(i,:), x_b(i,:), x_c1(i,:), x_p(i,:)] = swing_leg(phi_val,theta1_val,theta2_val,the_a_val,Q_val,t(i));
-    [x_zmp(i,:), res] = stable(phi_val,Q_val);
+%     [x_zmp(i,:), res] = stable(phi_val,Q_val);
+    [inv_phi(i),inv_theta1(i),inv_theta2(i),inv_theta_a(i),inv_Q(i)] = invDyna(x_a(i,:), x_b(i,:), x_c(i,:), x_p(i,:));
 end
 
 
-for i = 1:length(t)
-    torques(i,:) = dyna_eqn(t(i));% Rectify the input
-end
+% for i = 1:length(t)
+%     torques(i,:) = dyna_eqn(t(i));% Rectify the input
+% end
 
-%% Point to consider: The torque values must be for eah leg. Supply the angular values separately for each leg. 
+%% Point to consider: The torque values must be for each leg. Supply the angular values separately for each leg. 
 
-torques
+% torques
 % plot(t,torques);
 
 %% Plotting
@@ -154,25 +155,40 @@ torques
 %     th_a(i) = theta_a(t(i),'val');
 %     Q_te(i) = Q(t(i),'val');
 % end
-
-%
+% 
+% 
 % % close
 % figure
 % plot(t,(ph));
+% hold on
+% plot(t,inv_phi,['r','o']);
+% hold off
 % title('plot of phi');
-
+% 
 % figure
 % plot(t,th1);
+% hold on
+% plot(t,inv_theta1,['r','o']);
+% hold off
 % title('plot of theta-1');
-
+% 
 % figure
 % plot(t,th2);
+% hold on
+% plot(t,inv_theta2,['r','o']);
+% hold off
 % title('plot of theta-2');
-
+% 
 % figure
 % plot(t,th_a);
+% hold on
+% plot(t,inv_theta_a,['r','o']);
+% hold off
 % title('plot of theta-a');
-
+% 
 % figure
 % plot(t,Q_te);
+% hold on
+% plot(t,inv_Q,['r','o']);
+% hold off
 % title('plot of Q');
