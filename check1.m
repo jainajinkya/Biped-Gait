@@ -16,10 +16,10 @@ Ls = 0.5;
 maxParameters();
 
 %% Generating time points
-t_req = 4*tm;
-t_resol = 100;
+t_req = 5*tm;
+t_resol = 50;
 t_div = tm/t_resol;
-t= [t_div];
+t = t_div*ones(1,1) ;
 
 for i=1:(t_req/t_div)-1
     t(i+1,1) = t(i,1) + t_div;
@@ -36,27 +36,31 @@ for i = 1:length(t)
     Q_val = Q(t(i), 'val');
     the_a_val = theta_a(t(i), 'val');
     
-    if(i>11 && rem(i,t_resol)==0)
+    if(i>=(t_resol) && rem(i,t_resol)==0)
         step_inc = 1;
-    elseif(i==11)
-        step_inc = 1;
+        %     elseif(i==(t_resol+2))
+        %         step_inc = 1;
     end
     
     [x_e(i,:), x_d(i,:), x_c2(i,:), x_q(i,:) ,x_c(i,:)] = static_leg(phi_val,Q_val,t(i),step_inc);
     [x_a(i,:), x_b(i,:), x_c1(i,:), x_p(i,:)] = swing_leg(phi_val,theta1_val,theta2_val,the_a_val,Q_val,t(i));
-%     [x_zmp(i,:), res] = stable(phi_val,Q_val);
-    [inv_phi(i),inv_theta1(i),inv_theta2(i),inv_theta_a(i),inv_Q(i)] = invDyna(x_a(i,:), x_b(i,:), x_c(i,:), x_p(i,:));
+    %     [x_zmp(i,:), res] = stable(phi_val,Q_val);
+    %     [inv_phi(i),inv_theta1(i),inv_theta2(i),inv_theta_a(i),inv_Q(i)] = invDyna(x_a(i,:), x_b(i,:), x_c(i,:), x_p(i,:));
 end
 
-
+% plot(x_c(:,1), x_c(:,3))
+% hold on
+% sm_c = smooth(x_c(:,1), x_c(:,3), 'sgolay');
+% plot(x_c(:,1),sm_c(:,1));%,['r','o']);
+% hold off
 % for i = 1:length(t)
 %     torques(i,:) = dyna_eqn(t(i));% Rectify the input
 % end
-
-%% Point to consider: The torque values must be for each leg. Supply the angular values separately for each leg. 
-
-% torques
-% plot(t,torques);
+%
+% %% Point to consider: The torque values must be for each leg. Supply the angular values separately for each leg.
+%
+% torques(1,2)
+% % plot(t,torques);
 
 %% Plotting
 
@@ -146,46 +150,46 @@ end
 % % close(vidObj1);
 
 
-% %% Angular Plotting
-% %
-% for i = 1:length(t)
-%     ph(i)  = phi(t(i),'val');
-%     th1(i) = theta1(t(i),'val');
-%     th2(i) = theta2(t(i),'val');
-%     th_a(i) = theta_a(t(i),'val');
-%     Q_te(i) = Q(t(i),'val');
-% end
-% 
-% 
-% % close
-% figure
-% plot(t,(ph));
+%% Angular Plotting
+%
+for i = 1:length(t)
+    ph(i)  = phi(t(i),'val');
+    th1(i) = theta1(t(i),'val');
+    th2(i) = theta2(t(i),'val');
+    th_a(i) = theta_a(t(i),'val');
+    Q_te(i) = Q(t(i),'val');
+end
+
+
+% close
+figure
+plot(t,(ph));
 % hold on
 % plot(t,inv_phi,['r','o']);
 % hold off
-% title('plot of phi');
-% 
+title('plot of phi');
+%
 % figure
 % plot(t,th1);
 % hold on
 % plot(t,inv_theta1,['r','o']);
 % hold off
 % title('plot of theta-1');
-% 
+%
 % figure
 % plot(t,th2);
 % hold on
 % plot(t,inv_theta2,['r','o']);
 % hold off
 % title('plot of theta-2');
-% 
+%
 % figure
 % plot(t,th_a);
 % hold on
 % plot(t,inv_theta_a,['r','o']);
 % hold off
 % title('plot of theta-a');
-% 
+%
 % figure
 % plot(t,Q_te);
 % hold on

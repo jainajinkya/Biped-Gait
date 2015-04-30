@@ -24,6 +24,6 @@ a3 = 4*phi_max/tm^3;
 if (strcmp(type,'char'))
     syms t
 end
-    phi_val = a0 + a1*t + a2*t^2 + a3*t^3;
+phi_val = a0 + a1*t + a2*t^2 + a3*t^3;
 
 end

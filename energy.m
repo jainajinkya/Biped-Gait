@@ -1,6 +1,6 @@
 function [KE, PE] = energy(t_val)
 %syms sym_phi sym_phi_dot the1 the1_dot the2 the2_dot the_a the_a_dot sym_Q sym_Q_dot t t1
-% syms l1 l2 l3 l4 l5 m1 m2 m3 m4 m5 m6 m7 
+syms l1 l2 l3 l4 l5 m1 m2 m3 m4 m5 m6 m7 
 syms t t1
 
 global tm
@@ -34,20 +34,20 @@ sym_Q_dot_val = diff(sym_Q_val,t1);
 g = 9.8;
 
 %% Dimensions
-l1 = 0.45;
-l2 = 0.45;
-l3 = 0.15;
-l4 = 0.1;
-l5 = 0.4;
-
-%% Masses
-m1 = 10.5;
-m2 = 2.8;
-m3 = 1;
-m4 = 43;
-m5 = 10.5;
-m6 = 2.8;
-m7 = 1;
+% l1 = 0.45;
+% l2 = 0.45;
+% l3 = 0.15;
+% l4 = 0.1;
+% l5 = 0.4;
+% 
+% %% Masses
+% m1 = 10.5;
+% m2 = 2.8;
+% m3 = 1;
+% m4 = 43;
+% m5 = 10.5;
+% m6 = 2.8;
+% m7 = 1;
 
 %% Moments of Inertias
 Ixx2 = (1/12)*m2*l1^2*(cos(sym_phi))^2;
