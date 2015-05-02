@@ -13,7 +13,7 @@ td = 0.1;
 x_ori = [0 0 0];
 Ls = 0.5;
 
-t_req = 5*tm;
+t_req = tm;
 t_resol = 2;
 t_div = tm/t_resol;
 t = t_div*ones(1,1) ;
