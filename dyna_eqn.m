@@ -34,17 +34,17 @@ sym_Q_dot_val = diff(sym_Q_val,t1);
 Lagrag = KE - PE;
 
 %% New Method
-dL_dphi  =  simplify(deriv(Lagrag,sym_phi));
-dL_dthe1  =  simplify(deriv(Lagrag,the1));
-dL_dthe2  =  simplify(deriv(Lagrag,the2));
-dL_dthe_a =  simplify(deriv(Lagrag,the_a));
-dL_dQ     =  simplify(deriv(Lagrag,sym_Q));
+dL_dphi  =  (deriv(Lagrag,sym_phi));
+dL_dthe1  =  (deriv(Lagrag,the1));
+dL_dthe2  =  (deriv(Lagrag,the2));
+dL_dthe_a =  (deriv(Lagrag,the_a));
+dL_dQ     =  (deriv(Lagrag,sym_Q));
 
-dL_dphi_dot   = simplify(deriv(Lagrag, sym_phi_dot));
-dL_dthe1_dot  = simplify(deriv(Lagrag, the1_dot));
-dL_dthe2_dot  = simplify(deriv(Lagrag, the2_dot));
-dL_dthe_a_dot = simplify(deriv(Lagrag, the_a_dot));
-dL_dQ_dot     = simplify(deriv(Lagrag, sym_Q_dot));
+dL_dphi_dot   = (deriv(Lagrag, sym_phi_dot));
+dL_dthe1_dot  = (deriv(Lagrag, the1_dot));
+dL_dthe2_dot  = (deriv(Lagrag, the2_dot));
+dL_dthe_a_dot = (deriv(Lagrag, the_a_dot));
+dL_dQ_dot     = (deriv(Lagrag, sym_Q_dot));
 
 dL_dq = [dL_dphi; dL_dthe1; dL_dthe2; dL_dthe_a; dL_dQ];
 dL_dq_dot = [dL_dphi_dot; dL_dthe1_dot; dL_dthe2_dot; dL_dthe_a_dot; dL_dQ_dot];
@@ -57,9 +57,10 @@ for i = 1: size(dL_dq_dot,1)
     ddL_dq_dot_dt_2(i,1) = deriv(dL_dq_dot(i), t1);
 end
 
-ddL_dq_dot_dt = simplify(ddL_dq_dot_dt_1 + ddL_dq_dot_dt_2);
+ddL_dq_dot_dt = (ddL_dq_dot_dt_1 + ddL_dq_dot_dt_2);
 
-tau = simplify(ddL_dq_dot_dt - dL_dq);
+tau = (ddL_dq_dot_dt - dL_dq);
+% tau = simplify(ddL_dq_dot_dt - dL_dq);
 
 %
 tau = subs(tau, [diff(sym_phi,t, t), diff(the1,t, t), diff(the2,t, t), diff(the_a,t,t), diff(sym_Q,t1, t1)],...
@@ -68,12 +69,13 @@ tau = subs(tau, [diff(sym_phi,t, t), diff(the1,t, t), diff(the2,t, t), diff(the_
 tau = subs(tau,[sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
     [ph, dph, th1, dth1, th2, dth2, th_a, dth_a, Qs, dQs]);
 
+%tau = simplify(tau,'IgnoreAnalyticConstraints',true);
 %% Torque Value evaluation
-% tau = subs(tau,[sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
-%                 [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val,sym_Q_val, sym_Q_dot_val]);
-% tau = subs(tau, t, t_val - floor(t_val/tm)*tm);
-% tau = subs(tau, t1 , t_val - floor(t_val/(2*tm))*2*tm);
-% tau = eval(tau);
+% % % % tau = subs(tau,[sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
+% % % %                 [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val,sym_Q_val, sym_Q_dot_val]);
+% % % % tau = subs(tau, t, t_val - floor(t_val/tm)*tm);
+% % % % tau = subs(tau, t1 , t_val - floor(t_val/(2*tm))*2*tm);
+% % % % tau = eval(tau);
 
 
 %% Troque Arrangement
@@ -82,13 +84,13 @@ tau = subs(tau,[sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the
 % tor(2) ~ x-axis (yz plane -- frontal) Torques at points 'p' and  'q' not
 % considered
 
-if(rem(floor(t_val/tm),2) == 0)
-    torque = [tau(4); tau(5); tau(3); 0; 0; 0; tau(2); 0; 0; 0; 0; 0; tau(1); tau(5)];
-elseif(rem(floor(t_val/tm),2) == 1)
-    torque = [tau(1); tau(5); 0; 0; 0; 0; 0; 0; tau(2); 0; tau(3); 0; tau(4); tau(5)];
-end
+% if(rem(floor(t_val/tm),2) == 0)
+%     torque = [tau(4); tau(5); tau(3); 0; 0; 0; tau(2); 0; 0; 0; 0; 0; tau(1); tau(5)];
+% elseif(rem(floor(t_val/tm),2) == 1)
+%     torque = [tau(1); tau(5); 0; 0; 0; 0; 0; 0; tau(2); 0; tau(3); 0; tau(4); tau(5)];
+% end
 
-% torque = tau;
+torque = tau;
 end
 
 

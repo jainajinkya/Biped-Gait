@@ -70,5 +70,5 @@ for i = 1:size(A,1)
     end
 end
 cd ..
-save('lifemod_data.mat', 'COM', 'COM1', 'COM2', 'RKnee', 'LKnee', 'RAnk', 'LAnk', 'Rtoe', 'Ltoe')
+save('lifemod_data_unpro.mat', 'COM', 'COM1', 'COM2', 'RKnee', 'LKnee', 'RAnk', 'LAnk', 'Rtoe', 'Ltoe')
 % fclose(fid);
