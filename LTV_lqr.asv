@@ -1,0 +1,10 @@
+function [S] = LTV_lqr(f)
+
+
+A = jacobian(f,x);
+B = jacobian(f,u);
+
+
+[K,S,e] = LQR(A,B,Q,R)
+
+end

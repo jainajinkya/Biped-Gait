@@ -1,5 +1,10 @@
 
 
+
+A.  .plot_3.curve_4.x_data (NO UNITS)
+B.  .plot_3.curve_4.y_data (newton-mm)
+
+       A               B         
  0.000000E+000    9.086451E+004   
  1.000000E-002    1.072097E+005   
  2.000000E-002    1.223797E+005   
