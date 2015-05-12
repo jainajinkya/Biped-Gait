@@ -1,5 +1,5 @@
 clear all
-close all
+% close all
 clc
 
 global l1 l2 l3 l4 l5 tm td Ls x_ori t_resol % other global variable Vc, phi_max, theta1_max, theta2_max, Q_max
@@ -190,9 +190,9 @@ title('plot of phi');
 % hold off
 % title('plot of theta-a');
 %
-% figure
-% plot(t,Q_te);
-% hold on
-% plot(t,inv_Q,['r','o']);
-% hold off
-% title('plot of Q');
+figure
+plot(t,Q_te);
+hold on
+plot(t,inv_Q,['r','o']);
+hold off
+title('plot of Q');
