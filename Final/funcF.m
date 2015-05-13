@@ -1,8 +1,8 @@
-function f = funcF(X_des)
+function f = funcF(X_des, u)
 
-syms m2 m3 m4 m5 m6 m7 l1 l2 l3 l4 l5 h w
+global m2 m3 m4 m5 m6 m7 l1 l2 l3 l4 l5 h w
 % syms phi theta1 theta2 theta_a Q phi_dot theta1_dot theta2_dot theta_a_dot Q_dot
-syms T_HL1 T_HL2 T_KL1 T_KL2 T_AL1 T_AL2 T_HR1 T_HR2 T_KR1 T_KR2 T_AR1 T_AR2
+% syms T_HL1 T_HL2 T_KL1 T_KL2 T_AL1 T_AL2 T_HR1 T_HR2 T_KR1 T_KR2 T_AR1 T_AR2
 
 
 LSwing = [0:0.01:0.35, 0.85:0.01:1.33, 1.83:0.01:2.31];
@@ -12,7 +12,7 @@ LSwing = round(LSwing.*100)/100;
 RSwing = round(RSwing.*100)/100;
 
 t1 =0.23;
-tau =  [T_HL1; T_HL2; T_KL1; T_KL2; T_AL1; T_AL2; T_HR1; T_HR2; T_KR1; T_KR2; T_AR1; T_AR2];
+% tau =  [T_HL1; T_HL2; T_KL1; T_KL2; T_AL1; T_AL2; T_HR1; T_HR2; T_KR1; T_KR2; T_AR1; T_AR2];
 
 if(ismember(t1,RSwing))
     
@@ -273,5 +273,6 @@ elseif(ismember(t1,LSwing))
 end
 
 inv_A = inv(A);
-f = inv_A*tau - inv_A*B;
+% f = inv_A*tau - inv_A*B;
+f = inv_A*u - inv_A*B;
 end
