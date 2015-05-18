@@ -1,9 +1,9 @@
 function [KE, PE] = energy(t_val)
 %syms sym_phi sym_phi_dot the1 the1_dot the2 the2_dot the_a the_a_dot sym_Q sym_Q_dot t t1
-syms l1 l2 l3 l4 l5 h w m1 m2 m3 m4 m5 m6 m7
+% syms l1 l2 l3 l4 l5 h w m1 m2 m3 m4 m5 m6 m7
 syms t t1
 
-global tm
+global l1 l2 l3 l4 l5 tm h w
 %
 
 sym_phi = sym('sym_phi(t)');
@@ -24,30 +24,30 @@ the2_val = theta2(t_val,'char');
 the_a_val = theta_a(t_val,'char');
 sym_Q_val = Q(t_val,'char');
 
-% sym_phi_dot_val = diff(sym_phi_val,t);
-% the1_dot_val = diff(the1_val,t);
-% the2_dot_val = diff(the2_val,t);
-% the_a_dot_val = diff(the_a_val,t);
-% sym_Q_dot_val = diff(sym_Q_val,t1);
+sym_phi_dot_val = diff(sym_phi_val,t);
+the1_dot_val = diff(the1_val,t);
+the2_dot_val = diff(the2_val,t);
+the_a_dot_val = diff(the_a_val,t);
+sym_Q_dot_val = diff(sym_Q_val,t1);
 
 
 g = 9.8;
 
 %% Dimensions
-% l1 = 0.45;
-% l2 = 0.45;
-% l3 = 0.15;
-% l4 = 0.1;
-% l5 = 0.4;
-%
-% %% Masses
-% m1 = 10.5;
-% m2 = 2.8;
-% m3 = 1;
-% m4 = 43;
-% m5 = 10.5;
-% m6 = 2.8;
-% m7 = 1;
+l1 = 0.45;
+l2 = 0.45;
+l3 = 0.15;
+l4 = 0.1;
+l5 = 0.4;
+
+%% Masses
+m1 = 10.5;
+m2 = 2.8;
+m3 = 1;
+m4 = 43;
+m5 = 10.5;
+m6 = 2.8;
+m7 = 1;
 
 %% Moments of Inertias
 
@@ -85,11 +85,11 @@ if(rem(floor(t_val/tm),2) == 0)
     KE = (KE1 + KE2 + KE3 + KE4 + KE5 + KE6 + KE7);
     
     
-    % KE = subs(KE,[sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
-    %     [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val,sym_Q_val, sym_Q_dot_val]);
-    % KE = subs(KE, t, t_val - floor(t_val/tm)*tm);
-    % KE = subs(KE, t1 , t_val - floor(t_val/(2*tm))*2*tm);
-    % KE = eval(KE);
+%     KE = subs(KE,[sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
+%         [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val,sym_Q_val, sym_Q_dot_val]);
+%     KE = subs(KE, t, t_val - floor(t_val/tm)*tm);
+%     KE = subs(KE, t1 , t_val - floor(t_val/(2*tm))*2*tm);
+%     KE = eval(KE);
     
     %% Potential Energies
     PE1 = 0;
@@ -102,11 +102,11 @@ if(rem(floor(t_val/tm),2) == 0)
     
     PE = (PE1 + PE2 + PE3 + PE4 + PE5 + PE6+ PE7);
     
-    % PE = subs(PE,[sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
-    %     [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val,sym_Q_val, sym_Q_dot_val]);
-    % PE = subs(PE, t, t_val - floor(t_val/tm)*tm);
-    % PE = subs(PE, t1 , t_val - floor(t_val/(2*tm))*2*tm);
-    % PE = eval(PE);
+%     PE = subs(PE,[sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
+%         [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val,sym_Q_val, sym_Q_dot_val]);
+%     PE = subs(PE, t, t_val - floor(t_val/tm)*tm);
+%     PE = subs(PE, t1 , t_val - floor(t_val/(2*tm))*2*tm);
+%     PE = eval(PE);
     
 elseif(rem(floor(t_val/tm),2) == 1)
     I7 = (m1/12)*[l4^2 + h^2, 0 ,0; 0, l3^2 + h^2, 0; 0, 0, l3^2 + l4^2];
@@ -142,11 +142,11 @@ elseif(rem(floor(t_val/tm),2) == 1)
     KE = (KE1 + KE2 + KE3 + KE4 + KE5 + KE6 + KE7);
     
     
-    % KE = subs(KE,[sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
-    %     [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val,sym_Q_val, sym_Q_dot_val]);
-    % KE = subs(KE, t, t_val - floor(t_val/tm)*tm);
-    % KE = subs(KE, t1 , t_val - floor(t_val/(2*tm))*2*tm);
-    % KE = eval(KE);
+%     KE = subs(KE,[sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
+%         [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val,sym_Q_val, sym_Q_dot_val]);
+%     KE = subs(KE, t, t_val - floor(t_val/tm)*tm);
+%     KE = subs(KE, t1 , t_val - floor(t_val/(2*tm))*2*tm);
+%     KE = eval(KE);
     
     %% Potential Energies
     PE7 = 0;
@@ -159,11 +159,11 @@ elseif(rem(floor(t_val/tm),2) == 1)
     
     PE = (PE1 + PE2 + PE3 + PE4 + PE5 + PE6+ PE7);
     
-    % PE = subs(PE,[sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
-    %     [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val,sym_Q_val, sym_Q_dot_val]);
-    % PE = subs(PE, t, t_val - floor(t_val/tm)*tm);
-    % PE = subs(PE, t1 , t_val - floor(t_val/(2*tm))*2*tm);
-    % PE = eval(PE);
+%     PE = subs(PE,[sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
+%         [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val,sym_Q_val, sym_Q_dot_val]);
+%     PE = subs(PE, t, t_val - floor(t_val/tm)*tm);
+%     PE = subs(PE, t1 , t_val - floor(t_val/(2*tm))*2*tm);
+%     PE = eval(PE);
     
 end
 

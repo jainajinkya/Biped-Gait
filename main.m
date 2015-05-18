@@ -2,19 +2,21 @@ clear all
 close all
 clc
 
-global l1 l2 l3 l4 l5 tm td Ls x_ori t_resol % other global variable Vc, phi_max, theta1_max, theta2_max, Q_max
+global l1 l2 l3 l4 l5 tm td Ls x_ori t_resol h w % other global variable Vc, phi_max, theta1_max, theta2_max, Q_max
 l1 = 0.45;
 l2 = 0.45;
 l3 = 0.15;
 l4 = 0.1;
 l5 = 0.4;
+h = 0.05;
+w = 0.08;
 tm = 0.8;
 td = 0.1;
 x_ori = [0 0 0];
 Ls = 0.5;
 
-t_req = tm;
-t_resol = 5;
+t_req = 5*tm;
+t_resol = 25;
 t_div = tm/t_resol;
 t = t_div*ones(1,1) ;
 

@@ -1,8 +1,22 @@
-function f = funcF(X_des, u)
-
-global m2 m3 m4 m5 m6 m7 l1 l2 l3 l4 l5 h w
+function [A] = funcF(X_des,U_des)
+tic
+global m2 m3 m4 m5 m6 m7 l1 l2 l3 l4 h w
+% syms m2 m3 m4 m5 m6 m7 l1 l2 l3 l4 h w
 % syms phi theta1 theta2 theta_a Q phi_dot theta1_dot theta2_dot theta_a_dot Q_dot
 % syms T_HL1 T_HL2 T_KL1 T_KL2 T_AL1 T_AL2 T_HR1 T_HR2 T_KR1 T_KR2 T_AR1 T_AR2
+
+syms t
+phi = sym('phi(t)');
+theta1 = sym('theta1(t)');
+theta2 = sym('theta2(t)');
+theta_a = sym('theta_a(t)');
+Q = sym('Q(t)');
+
+phi_dot = (deriv(phi,t));
+theta1_dot = (deriv(theta1,t));
+theta2_dot = (deriv(theta2,t));
+theta_a_dot = (deriv(theta_a,t));
+Q_dot = (deriv(Q,t));
 
 
 LSwing = [0:0.01:0.35, 0.85:0.01:1.33, 1.83:0.01:2.31];
@@ -12,23 +26,57 @@ LSwing = round(LSwing.*100)/100;
 RSwing = round(RSwing.*100)/100;
 
 t1 =0.23;
-% tau =  [T_HL1; T_HL2; T_KL1; T_KL2; T_AL1; T_AL2; T_HR1; T_HR2; T_KR1; T_KR2; T_AR1; T_AR2];
+
+
+if(ismember(t1,LSwing))
+    dotAng_HL1 = theta1_dot;    Ang_HL1 = theta1;
+    dotAng_HL2 = Q_dot;         Ang_HL2 = Q;
+    dotAng_KL1 = theta2_dot;    Ang_KL1 = theta2;
+    dotAng_KL2 = Q_dot;         Ang_KL2 = Q;
+    dotAng_AL1 = theta_a_dot;   Ang_AL1 = theta_a;
+    dotAng_AL2 = Q_dot;         Ang_AL2 = Q;
+    dotAng_HR1 = phi_dot;       Ang_HR1 = phi;
+    dotAng_HR2 = Q_dot;         Ang_HR2 = Q;
+    dotAng_KR1 = phi_dot;       Ang_KR1 = phi;
+    dotAng_KR2 = Q_dot;         Ang_KR2 = Q;
+    dotAng_AR1 = phi_dot;       Ang_AR1 = phi;
+    dotAng_AR2 = Q_dot;         Ang_AR2 = Q;
+
+elseif(ismember(t1,RSwing))
+    dotAng_HL1 = phi_dot;       Ang_HL1 = phi;
+    dotAng_HL2 = Q_dot;         Ang_HL2 = Q;
+    dotAng_KL1 = phi_dot;       Ang_KL1 = phi;
+    dotAng_KL2 = Q_dot;         Ang_KL2 = Q;
+    dotAng_AL1 = phi_dot;       Ang_AL1 = phi;
+    dotAng_AL2 = Q_dot;         Ang_AL2 = Q;
+    dotAng_HR1 = theta1_dot;    Ang_HR1 = theta1;
+    dotAng_HR2 = Q_dot;         Ang_HR2 = Q;
+    dotAng_KR1 = theta2_dot;    Ang_KR1 = theta2;
+    dotAng_KR2 = Q_dot;         Ang_KR2 = Q;
+    dotAng_AR1 = theta_a_dot;   Ang_AR1 = theta_a;
+    dotAng_AR2 = Q_dot;         Ang_AR2 = Q;
+end
+
+X = [Ang_HL1; dotAng_HL1; Ang_HL2; dotAng_HL2; Ang_KL1; dotAng_KL1; Ang_KL2; dotAng_KL2; Ang_AL1; dotAng_AL1; Ang_AL2; dotAng_AL2; ...
+     Ang_HR1; dotAng_HR1; Ang_HR2; dotAng_HR2; Ang_KR1; dotAng_KR1; Ang_KR2; dotAng_KR2; Ang_AR1; dotAng_AR1; Ang_AR2; dotAng_AR2];
+
+% U_sym =  [T_HL1; T_HL2; T_KL1; T_KL2; T_AL1; T_AL2; T_HR1; T_HR2; T_KR1; T_KR2; T_AR1; T_AR2];
 
 if(ismember(t1,RSwing))
     
-    phi = (X_des(14)+ X_des(18)+X_des(22))/3 ;
-    theta1 = X_des(2);
-    theta2 = X_des(6);
-    theta_a = X_des(10);
-    Q = (X_des(4)+X_des(8)+X_des(12)+X_des(16)+X_des(20)+X_des(24))/6;
-    phi_dot = (X_des(13)+ X_des(17)+X_des(21))/3 ;
-    theta1_dot = X_des(1);
-    theta2_dot = X_des(5);
-    theta_a_dot = X_des(9);
-    Q_dot = (X_des(3)+X_des(7)+X_des(11)+X_des(15)+X_des(19)+X_des(23))/6;
+    %     phi = (X_des(14)+ X_des(18)+X_des(22))/3 ;
+    %     theta1 = X_des(2);
+    %     theta2 = X_des(6);
+    %     theta_a = X_des(10);
+    %     Q = (X_des(4)+X_des(8)+X_des(12)+X_des(16)+X_des(20)+X_des(24))/6;
+    %     phi_dot = (X_des(13)+ X_des(17)+X_des(21))/3 ;
+    %     theta1_dot = X_des(1);
+    %     theta2_dot = X_des(5);
+    %     theta_a_dot = X_des(9);
+    %     Q_dot = (X_des(3)+X_des(7)+X_des(11)+X_des(15)+X_des(19)+X_des(23))/6;
     
     
-    A = [(h^2/12)*(m5+m6+m7) + m5*l2^2/3 + m6*(l1^2/3 + l2^2)/4 + m7*(l2^2 + l3^2/3)/4, 0,0,0, ...
+    Mat1 = [(h^2/12)*(m5+m6+m7) + m5*l2^2/3 + m6*(l1^2/3 + l2^2)/4 + m7*(l2^2 + l3^2/3)/4, 0,0,0, ...
         (h^2/12)*(m6+m7) + m7*l3^2/12 + (cos(theta1 - theta2)/4)*l1*l2*(m6+m7) + m6*l1^2/12, 0,0,0, ...
         m7*(h^2+l3^2)/12 + m7*(cos(theta1 - theta_a)/4)*l2*l3, 0,0,0, ...
         ((h^2/12)*(m5+m6+m7) + (m6*l1^2 + m5*l2^2 + m7*l3^2)/12 + (cos(phi-theta1)/2)*(m5+m6+m7)*(l2^2 + l1*l2))/3,0,0,0, ...
@@ -105,7 +153,7 @@ if(ismember(t1,RSwing))
     
     
     
-    B = [-phi_dot^2*sin(phi-theta1)*(m5+m6+m7)*(l2^2+l1*l2)/2 + theta2_dot^2*sin(theta1-theta2)*l1*l2*(m6+m7)/4 + theta_a^2*l2*l3*m7*sin(theta1-theta_a)/4 ...
+    Mat2 = [-phi_dot^2*sin(phi-theta1)*(m5+m6+m7)*(l2^2+l1*l2)/2 + theta2_dot^2*sin(theta1-theta2)*l1*l2*(m6+m7)/4 + theta_a^2*l2*l3*m7*sin(theta1-theta_a)/4 ...
         + phi_dot*theta1_dot*sin(phi-theta1)*(m5+m6+m7)*(l2^2+l1*l2)/2 ...
         - theta1_dot*(theta2_dot*l1*l2*sin(theta1-theta2)*(m6+m7)/4 + theta_a_dot*l2*l3*m7*sin(theta1-theta_a)/4) + (49/5)*sin(theta1)*l2*(m6+m7+m5/2);...
         ...
@@ -143,23 +191,78 @@ if(ismember(t1,RSwing))
         Q_dot*phi_dot*sin(2*phi)*(m2*l1^2/4 + (m3+m5)*(2*l1+l2)^2/4 + (m6+m7)*(l1-l2)^2/4 + m4*(l1+l2)^2) ...
         ];
     
-    %         f =
+    %% inverse definition
+    
+    dX_inv_A(:,:,1)  = deriv(Mat1, theta1_dot);
+    dX_inv_A(:,:,2)  = deriv(Mat1, theta1);
+    dX_inv_A(:,:,3)  = deriv(Mat1, Q_dot);
+    dX_inv_A(:,:,4)  = deriv(Mat1, Q);
+    dX_inv_A(:,:,5)  = deriv(Mat1, theta2_dot);
+    dX_inv_A(:,:,6)  = deriv(Mat1, theta2);
+    dX_inv_A(:,:,7)  = dX_inv_A(:,:,3);
+    dX_inv_A(:,:,8)  = dX_inv_A(:,:,4);
+    dX_inv_A(:,:,9)  = deriv(Mat1, theta_a_dot);
+    dX_inv_A(:,:,10)  = deriv(Mat1, theta_a);
+    dX_inv_A(:,:,11)  = dX_inv_A(:,:,3);
+    dX_inv_A(:,:,12)  = dX_inv_A(:,:,4);
+    dX_inv_A(:,:,13)  = deriv(Mat1, phi_dot);
+    dX_inv_A(:,:,14)  = deriv(Mat1, phi);
+    dX_inv_A(:,:,15)  = dX_inv_A(:,:,3);
+    dX_inv_A(:,:,16)  = dX_inv_A(:,:,4);
+    dX_inv_A(:,:,17)  = dX_inv_A(:,:,13);
+    dX_inv_A(:,:,18)  = dX_inv_A(:,:,14);
+    dX_inv_A(:,:,19)  = dX_inv_A(:,:,3);
+    dX_inv_A(:,:,20)  = dX_inv_A(:,:,4);
+    dX_inv_A(:,:,21)  = dX_inv_A(:,:,13);
+    dX_inv_A(:,:,22)  = dX_inv_A(:,:,14);
+    dX_inv_A(:,:,23)  = dX_inv_A(:,:,3);
+    dX_inv_A(:,:,24)  = dX_inv_A(:,:,4);
+    
+    
+    dX_inv_B(:,:,1)  = deriv(Mat2, theta1_dot);
+    dX_inv_B(:,:,2)  = deriv(Mat2, theta1);
+    dX_inv_B(:,:,3)  = deriv(Mat2, Q_dot);
+    dX_inv_B(:,:,4)  = deriv(Mat2, Q);
+    dX_inv_B(:,:,5)  = deriv(Mat2, theta2_dot);
+    dX_inv_B(:,:,6)  = deriv(Mat2, theta2);
+    dX_inv_B(:,:,7)  = dX_inv_B(:,:,3);
+    dX_inv_B(:,:,8)  = dX_inv_B(:,:,4);
+    dX_inv_B(:,:,9)  = deriv(Mat2, theta_a_dot);
+    dX_inv_B(:,:,10)  = deriv(Mat2, theta_a);
+    dX_inv_B(:,:,11)  = dX_inv_B(:,:,3);
+    dX_inv_B(:,:,12)  = dX_inv_B(:,:,4);
+    dX_inv_B(:,:,13)  = deriv(Mat2, phi_dot);
+    dX_inv_B(:,:,14)  = deriv(Mat2, phi);
+    dX_inv_B(:,:,15)  = dX_inv_B(:,:,3);
+    dX_inv_B(:,:,16)  = dX_inv_B(:,:,4);
+    dX_inv_B(:,:,17)  = dX_inv_B(:,:,13);
+    dX_inv_B(:,:,18)  = dX_inv_B(:,:,14);
+    dX_inv_B(:,:,19)  = dX_inv_B(:,:,3);
+    dX_inv_B(:,:,20)  = dX_inv_B(:,:,4);
+    dX_inv_B(:,:,21)  = dX_inv_B(:,:,13);
+    dX_inv_B(:,:,22)  = dX_inv_B(:,:,14);
+    dX_inv_B(:,:,23)  = dX_inv_B(:,:,3);
+    dX_inv_B(:,:,24)  = dX_inv_B(:,:,4);
+    
+    
+    
+    
     
 elseif(ismember(t1,LSwing))
+    %
+    %     phi = (X_des(2)+ X_des(6)+X_des(10))/3 ;
+    %     theta1 = X_des(14);
+    %     theta2 = X_des(18);
+    %     theta_a = X_des(22);
+    %     Q = (X_des(4)+X_des(8)+X_des(12)+X_des(16)+X_des(20)+X_des(24))/6;
+    %     phi_dot = (X_des(1)+ X_des(5)+X_des(9))/3 ;
+    %     theta1_dot = X_des(13);
+    %     theta2_dot = X_des(17);
+    %     theta_a_dot = X_des(21);
+    %     Q_dot = (X_des(3)+X_des(7)+X_des(11)+X_des(15)+X_des(19)+X_des(23))/6;
     
-    phi = (X_des(2)+ X_des(6)+X_des(10))/3 ;
-    theta1 = X_des(14);
-    theta2 = X_des(18);
-    theta_a = X_des(22);
-    Q = (X_des(4)+X_des(8)+X_des(12)+X_des(16)+X_des(20)+X_des(24))/6;
-    phi_dot = (X_des(1)+ X_des(5)+X_des(9))/3 ;
-    theta1_dot = X_des(13);
-    theta2_dot = X_des(17);
-    theta_a_dot = X_des(21);
-    Q_dot = (X_des(3)+X_des(7)+X_des(11)+X_des(15)+X_des(19)+X_des(23))/6;
     
-    
-    A = [(h^2/12)*(m5+m6+m7) + m6*l1^2/12 + m7*l3^2/12 + m5*l2^2/12 + (cos(phi-theta1)/2)*(m5+m6+m7)*(l2^2 + l1*l2), 0,0,0, ...
+    Mat1 = [(h^2/12)*(m5+m6+m7) + m6*l1^2/12 + m7*l3^2/12 + m5*l2^2/12 + (cos(phi-theta1)/2)*(m5+m6+m7)*(l2^2 + l1*l2), 0,0,0, ...
         (h^2/12)*(m6+m7) + m6*l1^2/12 + m7*l3^2/12 + (cos(phi-theta2)/2)*(m6+m7)*(l1^2+l1*l2), 0,0,0, ...
         m7*(h^2/12 + l3^2/12 + l3*(cos(phi-theta_a)/2)*(l1+l2)), 0,0,0, ...
         ((h^2/12)*(m2+m3+m5+m6+m7)+ l1^2*(m2/3+m3+m4+m5+13*m6/12+m7) + l2^2*(m3/3+m4+13*m5/12+m6+m7) + m7*l3^2/12 + l1*l2*(m3+2*(m4+m5+m6+m7)))/3,0,0,0,...
@@ -233,7 +336,7 @@ elseif(ismember(t1,LSwing))
         0,0,(m7*(h^2 + l4^2)/60 + (h^2+w^2)*(m2+m3+m5+m6)/12 + (cos(phi))^2*(m2*l1^2/4 + (m3+m5)*(2*l1+l2)^2/4 + (m6+m7)*(l1-l2)^2/4 + m4*(l1+l2)^2))/(4*6),0, ...
         0,0,(m7*(h^2 + l4^2)/60 + (h^2+w^2)*(m2+m3+m5+m6)/12 + (cos(phi))^2*(m2*l1^2/4 + (m3+m5)*(2*l1+l2)^2/4 + (m6+m7)*(l1-l2)^2/4 + m4*(l1+l2)^2))/(4*6),0];
     
-    B = [-phi_dot*(theta1_dot*sin(phi-theta1)*(m5+m6+m7)*(l2^2+l1*l2)/2 + theta2_dot*sin(phi-theta2)*(m6+m7)*(l1^2+l1*l2)/2 + theta_a_dot*sin(phi-theta_a)*m7*l3*(l1+l2)/2)...
+    Mat2 = [-phi_dot*(theta1_dot*sin(phi-theta1)*(m5+m6+m7)*(l2^2+l1*l2)/2 + theta2_dot*sin(phi-theta2)*(m6+m7)*(l1^2+l1*l2)/2 + theta_a_dot*sin(phi-theta_a)*m7*l3*(l1+l2)/2)...
         + theta1_dot^2*sin(phi-theta1)*(m5+m6+m7)*(l2^2+l1*l2)/2 + theta2_dot^2*sin(phi-theta2)*(m6+m7)*(l1^2+l1*l2)/2 + theta_a_dot^2*sin(phi-theta_a)*m7*l3*(l1+l2)/2 ...
         + Q_dot*sin(2*phi)*(l1^2*(m2/4 + m3+m4+m5+m6/4 + m7/4)/2 + l2^2*(m3/4 +m4 + m5/4 + m6/4 + m7/4)/2 + l1*l2*(m3+2*m4+m5 - m6/2 - m7/2)/2)...
         - (49/5)*sin(phi)*(l1*(m3+m4+m5+m6+m7+m2/2) + l2*(m3/2 + m4+m5+m6+m7));...
@@ -270,9 +373,72 @@ elseif(ismember(t1,LSwing))
         + 294*l3*sin(theta_a)); ...
         ....
         Q_dot*phi_dot*sin(2*phi)*(m2*l1^2/4 + (m3+m5)*(2*l1+l2)^2/4 + (m6+m7)*(l1-l2)^2/4 + m4*(l1+l2)^2)];
+    
+       
+    dX_inv_A(:,:,13)  = deriv(Mat1, theta1_dot);
+    dX_inv_A(:,:,14)  = deriv(Mat1, theta1);
+    dX_inv_A(:,:,15)  = deriv(Mat1, Q_dot);
+    dX_inv_A(:,:,16)  = deriv(Mat1, Q);
+    dX_inv_A(:,:,17)  = deriv(Mat1, theta2_dot);
+    dX_inv_A(:,:,18)  = deriv(Mat1, theta2);
+    dX_inv_A(:,:,19)  = dX_inv_A(:,:,3);
+    dX_inv_A(:,:,20)  = dX_inv_A(:,:,4);
+    dX_inv_A(:,:,21)  = deriv(Mat1, theta_a_dot);
+    dX_inv_A(:,:,22)  = deriv(Mat1, theta_a);
+    dX_inv_A(:,:,23)  = dX_inv_A(:,:,3);
+    dX_inv_A(:,:,24)  = dX_inv_A(:,:,4);
+    dX_inv_A(:,:,1)  = deriv(Mat1, phi_dot);
+    dX_inv_A(:,:,2)  = deriv(Mat1, phi);
+    dX_inv_A(:,:,3)  = deriv(Mat1, Q_dot);
+    dX_inv_A(:,:,4)  = deriv(Mat1, Q);
+    dX_inv_A(:,:,5)  = dX_inv_A(:,:,1);
+    dX_inv_A(:,:,6)  = dX_inv_A(:,:,2);
+    dX_inv_A(:,:,7)  = dX_inv_A(:,:,3);
+    dX_inv_A(:,:,8)  = dX_inv_A(:,:,4);
+    dX_inv_A(:,:,9)  = dX_inv_A(:,:,1);
+    dX_inv_A(:,:,10)  = dX_inv_A(:,:,2);
+    dX_inv_A(:,:,11)  = dX_inv_A(:,:,3);
+    dX_inv_A(:,:,12)  = dX_inv_A(:,:,4);
+    
+    
+    
+    dX_inv_B(:,:,13)  = deriv(Mat2, theta1_dot);
+    dX_inv_B(:,:,14)  = deriv(Mat2, theta1);
+    dX_inv_B(:,:,15)  = deriv(Mat2, Q_dot);
+    dX_inv_B(:,:,16)  = deriv(Mat2, Q);
+    dX_inv_B(:,:,17)  = deriv(Mat2, theta2_dot);
+    dX_inv_B(:,:,18)  = deriv(Mat2, theta2);
+    dX_inv_B(:,:,19)  = dX_inv_B(:,:,3);
+    dX_inv_B(:,:,20)  = dX_inv_B(:,:,4);
+    dX_inv_B(:,:,21)  = deriv(Mat2, theta_a_dot);
+    dX_inv_B(:,:,22)  = deriv(Mat2, theta_a);
+    dX_inv_B(:,:,23)  = dX_inv_B(:,:,3);
+    dX_inv_B(:,:,24)  = dX_inv_B(:,:,4);
+    dX_inv_B(:,:,1)  = deriv(Mat2, phi_dot);
+    dX_inv_B(:,:,2)  = deriv(Mat2, phi);
+    dX_inv_B(:,:,3)  = deriv(Mat2, Q_dot);
+    dX_inv_B(:,:,4)  = deriv(Mat2, Q);
+    dX_inv_B(:,:,5)  = dX_inv_B(:,:,1);
+    dX_inv_B(:,:,6)  = dX_inv_B(:,:,2);
+    dX_inv_B(:,:,7)  = dX_inv_B(:,:,3);
+    dX_inv_B(:,:,8)  = dX_inv_B(:,:,4);
+    dX_inv_B(:,:,9)  = dX_inv_B(:,:,1);
+    dX_inv_B(:,:,10)  = dX_inv_B(:,:,2);
+    dX_inv_B(:,:,11)  = dX_inv_B(:,:,3);
+    dX_inv_B(:,:,12)  = dX_inv_B(:,:,4);
 end
 
-inv_A = inv(A);
-% f = inv_A*tau - inv_A*B;
-f = inv_A*u - inv_A*B;
+%% A&B Calculations
+dX_inv_A = subs(dX_inv_A,X,X_des');
+Mat1_val = eval(subs(Mat1,X,X_des'));
+Mat2_val = eval(subs(Mat2,X,X_des'));
+inv_Mat1 = pinv(Mat1_val);
+dX_inv_B = (subs(dX_inv_B,X,X_des'));
+
+
+%% Matrix A Calculation
+for i = 1:24
+    A(i,:) = eval(-inv_Mat1*dX_inv_A(:,:,i)*inv_Mat1*(U_des' - Mat2_val) - inv_Mat1*dX_inv_B(:,:,i));
+end
+toc
 end

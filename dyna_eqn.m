@@ -63,23 +63,23 @@ ddL_dq_dot_dt = (ddL_dq_dot_dt_1 + ddL_dq_dot_dt_2);
 tau = simplify(ddL_dq_dot_dt - dL_dq);
 
 %
-tau = subs(tau, [diff(sym_phi,t, t), diff(the1,t, t), diff(the2,t, t), diff(the_a,t,t), diff(sym_Q,t1, t1)],...
-    [ddph, ddth1, ddth2, ddth_a, ddQs]);
+% tau = subs(tau, [diff(sym_phi,t, t), diff(the1,t, t), diff(the2,t, t), diff(the_a,t,t), diff(sym_Q,t1, t1)],...
+%     [ddph, ddth1, ddth2, ddth_a, ddQs]);
 
 % tau = subs(tau,[sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
 %     [ph, dph, th1, dth1, th2, dth2, th_a, dth_a, Qs, dQs]);
 
-tau = subs(tau,[sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
-    [phi, phi_dot, theta1, theta1_dot, theta2, theta2_dot, theta_a, theta_a_dot, Q, Q_dot]);
+% tau = subs(tau,[sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
+%     [phi, phi_dot, theta1, theta1_dot, theta2, theta2_dot, theta_a, theta_a_dot, Q, Q_dot]);
 
 
 %tau = simplify(tau,'IgnoreAnalyticConstraints',true);
 %% Torque Value evaluation
-% % % % tau = subs(tau,[sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
-% % % %                 [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val,sym_Q_val, sym_Q_dot_val]);
-% % % % tau = subs(tau, t, t_val - floor(t_val/tm)*tm);
-% % % % tau = subs(tau, t1 , t_val - floor(t_val/(2*tm))*2*tm);
-% % % % tau = eval(tau);
+tau = subs(tau,[sym_phi, sym_phi_dot, the1, the1_dot, the2, the2_dot, the_a, the_a_dot, sym_Q, sym_Q_dot], ...
+                [sym_phi_val, sym_phi_dot_val, the1_val, the1_dot_val, the2_val, the2_dot_val, the_a_val, the_a_dot_val,sym_Q_val, sym_Q_dot_val]);
+tau = subs(tau, t, t_val - floor(t_val/tm)*tm);
+tau = subs(tau, t1 , t_val - floor(t_val/(2*tm))*2*tm);
+tau = eval(tau);
 
 
 %% Troque Arrangement
