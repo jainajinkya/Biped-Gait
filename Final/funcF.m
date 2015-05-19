@@ -1,4 +1,4 @@
-function [A] = funcF(X_des,U_des)
+function [A,B] = funcF(X_des,U_des)
 tic
 global m2 m3 m4 m5 m6 m7 l1 l2 l3 l4 h w
 % syms m2 m3 m4 m5 m6 m7 l1 l2 l3 l4 h w
@@ -440,5 +440,7 @@ dX_inv_B = (subs(dX_inv_B,X,X_des'));
 for i = 1:24
     A(i,:) = eval(-inv_Mat1*dX_inv_A(:,:,i)*inv_Mat1*(U_des' - Mat2_val) - inv_Mat1*dX_inv_B(:,:,i));
 end
+
+B = inv_Mat1;
 toc
 end

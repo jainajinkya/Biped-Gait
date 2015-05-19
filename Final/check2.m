@@ -8,7 +8,7 @@ clear all; close all; clc
 % cd ../LifeMOD_data/
 % load casey_RAnk_angle casey_RHip_angle casey_RKnee_angle
 % load casey_LAnk_torque casey_LHip_torque casey_LKnee_torque
-% 
+%
 % %% Generating Q_ref
 % cd ..
 % load lifeMod_data_pro
@@ -33,11 +33,11 @@ m7 = 1;
 
 
 [X_des, U_des] = refData();
-% 
+%
 % for i = 1:5
 %     f = funcF(X_des(i,:)', U_des(i,:)');
-%     
-%     
+%
+%
 % end
 
 % global m2 m3 m4 m5 m6 m7 l1 l2 l3 l4 l5 h w
@@ -48,16 +48,16 @@ m7 = 1;
 % theta2 = sym('theta2(t)');
 % theta_a = sym('theta_a(t)');
 % Q = sym('Q(t)');
-% 
+%
 % phi_dot = (diff(phi,t));
 % theta1_dot = (diff(theta1,t));
 % theta2_dot = (diff(theta2,t));
 % theta_a_dot = (diff(theta_a,t));
 % Q_dot = (diff(Q,t));
-% 
+%
 % LSwing = [0:0.01:0.35, 0.85:0.01:1.33, 1.83:0.01:2.31];
 % RSwing = [0.36:0.01:0.84, 1.34:0.01:1.82, 2.32:0.01:2.51];
-% 
+%
 % LSwing = round(LSwing.*100)/100;
 % RSwing = round(RSwing.*100)/100;
 
@@ -75,7 +75,7 @@ m7 = 1;
 %     dotAng_KR2 = Q_dot;         Ang_KR2 = Q;
 %     dotAng_AR1 = phi_dot;       Ang_AR1 = phi;
 %     dotAng_AR2 = Q_dot;         Ang_AR2 = Q;
-%     
+%
 % elseif(ismember(t1,RSwing))
 %     dotAng_HL1 = phi_dot;       Ang_HL1 = phi;
 %     dotAng_HL2 = Q_dot;         Ang_HL2 = Q;
@@ -90,15 +90,37 @@ m7 = 1;
 %     dotAng_AR1 = theta_a_dot;   Ang_AR1 = theta_a;
 %     dotAng_AR2 = Q_dot;         Ang_AR2 = Q;
 % end
-% 
+%
 % X = [Ang_HL1; dotAng_HL1; Ang_HL2; dotAng_HL2; Ang_KL1; dotAng_KL1; Ang_KL2; dotAng_KL2; Ang_AL1; dotAng_AL1; Ang_AL2; dotAng_AL2; ...
 %      Ang_HR1; dotAng_HR1; Ang_HR2; dotAng_HR2; Ang_KR1; dotAng_KR1; Ang_KR2; dotAng_KR2; Ang_AR1; dotAng_AR1; Ang_AR2; dotAng_AR2];
-% 
+%
 % % X_dot = deriv(X,t);
 
 
-[A]  = funcF(X_des(2,2:25), U_des(2,2:13));
 
+
+
+
+for i = 1:20
+[A(:,:,i),B(:,:,i)]  = funcF(X_des(i,2:25), U_des(i,2:13));
+end
+Q = diag(diag([m3*ones(24,4) m2*ones(24,4) m1*ones(24,4) m5*ones(24,4) m6*ones(24,4) m7*ones(24,4)]));
+R = eye(12);
+% [K,S,e] = lqr(A,B,Q,R);
+
+P(:,:,:) = zeros(24,24,2);
+K(:,:,:) = zeros(12,24,2);
+
+for i=2:20
+    K(:,:,i) = -inv((R + B(:,:,21-i)'*P(:,:,i-1)*B(:,:,21-i)))*B(:,:,21-i)'*P(:,:,i-1)*A(:,:,21-i);
+    P(:,:,i) = Q - K(:,:,i)'*R*K(:,:,i) + (A(:,:,21-i) + B(:,:,21-i)*K(:,:,i))'*P(:,:,i-1)*(A(:,:,21-i) + B(:,:,21-i)*K(:,:,i));
+end
+
+X_obt = zeros(24,1);
+for i=2:20
+    U_obt(:,i-1) = K(:,:,i)*X_obt(:,i-1);
+    X_obt(:,i) =  X_des(i-1,2:25)' + 0.01*(A(:,:,i-1)*(X_obt(:,i-1) - X_des(i-1,2:25)') + B(:,:,i-1)*(U_obt(:,i-1) - U_des(i-1,2:13)'));
+end
 
 
 
