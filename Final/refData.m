@@ -1,12 +1,12 @@
 function [X_des, U_des] = refData()
 
 cd ../LifeMOD_data/
-load casey_RAnk_angle
-load casey_RHip_angle
-load casey_RKnee_angle
-load casey_LAnk_angle
-load casey_LHip_angle
-load casey_LKnee_angle
+load casey_RAnk_angle_rad
+load casey_RHip_angle_rad
+load casey_RKnee_angle_rad
+load casey_LAnk_angle_rad
+load casey_LHip_angle_rad
+load casey_LKnee_angle_rad
 load casey_RAnk_torque
 load casey_RHip_torque
 load casey_RKnee_torque
@@ -58,26 +58,27 @@ time = round(time.*100)/100;
 Q_ref = interp1(LAnk_pro(:,1), Q_ref, time);
 Q_ref = [time; Q_ref]';
 
+
 %% Arranging the data for X_des and U_des
-    dotAng_HL1 = [diff(casey_LHip_angle(:,2),1,1); 0]; 
+    dotAng_HL1 = [diff(casey_LHip_angle_rad(:,2),1,1); 0]; 
     dotAng_HL2 = [diff(Q_ref(:,2),1,1); 0]; 
-    dotAng_KL1 = [diff(casey_LKnee_angle(:,2),1,1); 0]; 
+    dotAng_KL1 = [diff(casey_LKnee_angle_rad(:,2),1,1); 0]; 
     dotAng_KL2 = [diff(Q_ref(:,2),1,1); 0];
-    dotAng_AL1 = [diff(casey_LAnk_angle(:,2),1,1); 0]; 
+    dotAng_AL1 = [diff(casey_LAnk_angle_rad(:,2),1,1); 0]; 
     dotAng_AL2 = [diff(Q_ref(:,2),1,1); 0];
-    dotAng_HR1 = [diff(casey_RHip_angle(:,2),1,1); 0]; 
+    dotAng_HR1 = [diff(casey_RHip_angle_rad(:,2),1,1); 0]; 
     dotAng_HR2 = [diff(Q_ref(:,2),1,1); 0];
-    dotAng_KR1 = [diff(casey_RKnee_angle(:,2),1,1); 0]; 
+    dotAng_KR1 = [diff(casey_RKnee_angle_rad(:,2),1,1); 0]; 
     dotAng_KR2 = [diff(Q_ref(:,2),1,1); 0];
-    dotAng_AR1 = [diff(casey_RAnk_angle(:,2),1,1); 0]; 
+    dotAng_AR1 = [diff(casey_RAnk_angle_rad(:,2),1,1); 0]; 
     dotAng_AR2 = [diff(Q_ref(:,2),1,1); 0];
     
-X_des = [time', dotAng_HL1, casey_LHip_angle(:,2), dotAng_HL2, Q_ref(:,2),...
-         dotAng_KL1, casey_LKnee_angle(:,2), dotAng_KL2, Q_ref(:,2),...
-         dotAng_AL1, casey_LAnk_angle(:,2), dotAng_AL2, Q_ref(:,2), ...
-         dotAng_HR1, casey_RHip_angle(:,2), dotAng_HR2, Q_ref(:,2), ...
-         dotAng_KR1, casey_RKnee_angle(:,2), dotAng_KR2,  Q_ref(:,2), ...
-         dotAng_AR1, casey_RAnk_angle(:,2), dotAng_AR2, Q_ref(:,2)];
+X_des = [time', dotAng_HL1, casey_LHip_angle_rad(:,2), dotAng_HL2, Q_ref(:,2),...
+         dotAng_KL1, casey_LKnee_angle_rad(:,2), dotAng_KL2, Q_ref(:,2),...
+         dotAng_AL1, casey_LAnk_angle_rad(:,2), dotAng_AL2, Q_ref(:,2), ...
+         dotAng_HR1, casey_RHip_angle_rad(:,2), dotAng_HR2, Q_ref(:,2), ...
+         dotAng_KR1, casey_RKnee_angle_rad(:,2), dotAng_KR2,  Q_ref(:,2), ...
+         dotAng_AR1, casey_RAnk_angle_rad(:,2), dotAng_AR2, Q_ref(:,2)];
 
 U_des = [time', 0.87*casey_LHip_torque(:,2), 0.13*casey_LHip_torque(:,2), casey_LKnee_torque(:,2), zeros(251,1), ...
          0.87*casey_LAnk_torque(:,2), 0.13*casey_LAnk_torque(:,2), 0.87*casey_RHip_torque(:,2), ...
