@@ -1,4 +1,4 @@
-function [A,B] = funcF(X_des,U_des)
+function [A,B] = funcF(X_des,U_des,t1)
 tic
 global m2 m3 m4 m5 m6 m7 l1 l2 l3 l4 h w
 % syms m2 m3 m4 m5 m6 m7 l1 l2 l3 l4 h w
@@ -24,8 +24,6 @@ RSwing = [0.36:0.01:0.84, 1.34:0.01:1.82, 2.32:0.01:2.51];
 
 LSwing = round(LSwing.*100)/100;
 RSwing = round(RSwing.*100)/100;
-
-t1 =0.23;
 
 
 if(ismember(t1,LSwing))

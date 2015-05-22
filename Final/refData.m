@@ -57,20 +57,20 @@ time = [0:0.01:2.5];
 time = round(time.*100)/100;
 Q_ref = interp1(LAnk_pro(:,1), Q_ref, time);
 Q_ref = [time; Q_ref]';
-
+dt = 0.01;
 
 %% Arranging the data for X_des and U_des
-    dotAng_HL1 = [diff(casey_LHip_angle_rad(:,2),1,1); 0]; 
+    dotAng_HL1 = [diff(casey_LHip_angle_rad(:,2),1,1)/dt; 0]; 
     dotAng_HL2 = [diff(Q_ref(:,2),1,1); 0]; 
-    dotAng_KL1 = [diff(casey_LKnee_angle_rad(:,2),1,1); 0]; 
+    dotAng_KL1 = [diff(casey_LKnee_angle_rad(:,2),1,1)/dt; 0]; 
     dotAng_KL2 = [diff(Q_ref(:,2),1,1); 0];
-    dotAng_AL1 = [diff(casey_LAnk_angle_rad(:,2),1,1); 0]; 
+    dotAng_AL1 = [diff(casey_LAnk_angle_rad(:,2),1,1)/dt; 0]; 
     dotAng_AL2 = [diff(Q_ref(:,2),1,1); 0];
-    dotAng_HR1 = [diff(casey_RHip_angle_rad(:,2),1,1); 0]; 
+    dotAng_HR1 = [diff(casey_RHip_angle_rad(:,2),1,1)/dt; 0]; 
     dotAng_HR2 = [diff(Q_ref(:,2),1,1); 0];
-    dotAng_KR1 = [diff(casey_RKnee_angle_rad(:,2),1,1); 0]; 
+    dotAng_KR1 = [diff(casey_RKnee_angle_rad(:,2),1,1)/dt; 0]; 
     dotAng_KR2 = [diff(Q_ref(:,2),1,1); 0];
-    dotAng_AR1 = [diff(casey_RAnk_angle_rad(:,2),1,1); 0]; 
+    dotAng_AR1 = [diff(casey_RAnk_angle_rad(:,2),1,1)/dt; 0]; 
     dotAng_AR2 = [diff(Q_ref(:,2),1,1); 0];
     
 X_des = [time', dotAng_HL1, casey_LHip_angle_rad(:,2), dotAng_HL2, Q_ref(:,2),...

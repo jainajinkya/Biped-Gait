@@ -73,30 +73,30 @@ m7 = 1;
 [X_des, U_des] = refData();
 
 for i = 1:20
-[A(:,:,i),B(:,:,i)]  = funcF(X_des(i,2:25), U_des(i,2:13));
+[A(:,:,i),B(:,:,i)]  = funcF(X_des(i,2:25), U_des(i,2:13),X_des(i,1));
 end
 Q = diag(diag([m3*ones(24,4) m2*ones(24,4) m1*ones(24,4) m5*ones(24,4) m6*ones(24,4) m7*ones(24,4)]));
 R = eye(12);
 
-
-S(:,:,:) = zeros(24,24,2);
-S(:,:,20) = pinv(B(:,:,20))'*R*U_des(20,:)';
-
-for i = 20:-1:2
-    S(:,:,i-1) = S(:,:,i) + 0.01*(Q - S(:,:,i)*B(:,:,i)*inv(R)*B(:,:,i)'*S(:,:,i) + S(:,:,i)*A(:,:,i) + A(:,:,i)'*S(:,:,i));
-end
-
-X_obt = zeros(24,1);
-for i = 1:19
-   U_obt(:,i) = U_des(i,2:13)' - inv(R)*B(:,:,i+1)'*S(:,:,i)*(X_obt(:,i) - X_des(i,2:25)');
-   X_obt(:,i+1) =  (X_obt(:,i) - X_des(i,2:25)') + 0.01*(A(:,:,i+1)*(X_obt(:,i) - X_des(i,2:25)') + B(:,:,i+1)*(U_obt(:,i) - U_des(i,2:13)'));
-end
-
-
+% 
+% S(:,:,:) = zeros(24,24,2);
+% S(:,:,20) = pinv(B(:,:,20))'*R*U_des(20,:)';
+% 
+% for i = 20:-1:2
+%     S(:,:,i-1) = S(:,:,i) + 0.01*(Q - S(:,:,i)*B(:,:,i)*inv(R)*B(:,:,i)'*S(:,:,i) + S(:,:,i)*A(:,:,i) + A(:,:,i)'*S(:,:,i));
+% end
+% 
+% X_obt = zeros(24,1);
+% for i = 1:19
+%    U_obt(:,i) = U_des(i,2:13)' - inv(R)*B(:,:,i+1)'*S(:,:,i)*(X_obt(:,i) - X_des(i,2:25)');
+%    X_obt(:,i+1) =  (X_obt(:,i) - X_des(i,2:25)') + 0.01*(A(:,:,i+1)*(X_obt(:,i) - X_des(i,2:25)') + B(:,:,i+1)*(U_obt(:,i) - U_des(i,2:13)'));
+% end
 
 
-% [K,S,e] = lqr(A,B,Q,R);
 
+
+% [K,S,e] = lqr(A(:,:,2),B(:,:,2),Q,R);
+% [X,L,g] = care(A(:,:,2),B(:,:,2),Q);
 % clear P K
 % P(:,:,:) = zeros(24,24,2);
 % K(:,:,:) = zeros(12,24,2);
