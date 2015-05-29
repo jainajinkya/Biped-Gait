@@ -9,13 +9,20 @@ h = 0.05;
 w = 0.08;
 
 %% Masses
-m1 = 10.5;
-m2 = 2.8;
-m3 = 1;
-m4 = 43;
-m5 = 10.5;
-m6 = 2.8;
-m7 = 1;
+% m1 = 10.5;
+% m2 = 2.8;
+% m3 = 1;
+% m4 = 43;
+% m5 = 10.5;
+% m6 = 2.8;
+% m7 = 1;
+m1 = 4.3;
+m2 = 0.9;
+m3 = 0.4;
+m4 = 18.8;
+m5 = 4.3;
+m6 =0.9;
+m7 = 0.4;
 
 
 [X_des, U_des] = refData1();
@@ -25,7 +32,7 @@ for i = 1:251
 end
 
 
-% % Q = diag(diag([m3*ones(24,4) m2*ones(24,4) m1*ones(24,4) m5*ones(24,4) m6*ones(24,4) m7*ones(24,4)]));
+% Q = diag(diag([m3*ones(24,4) m2*ones(24,4) m1*ones(24,4) m5*ones(24,4) m6*ones(24,4) m7*ones(24,4)]));
 % R = eye(12);
 
 LSwing = [0:0.01:0.35, 0.85:0.01:1.33, 1.83:0.01:2.31];
@@ -34,10 +41,14 @@ RSwing = [0.36:0.01:0.84, 1.34:0.01:1.82, 2.32:0.01:2.51];
 LSwing = round(LSwing.*100)/100;
 RSwing = round(RSwing.*100)/100;
 
-for t1 = 1:251
+X_obt = zeros(10,1);
+X_obt(:,1) = X_des(1,2:11)';
+clear U_cont 
+
+for t1 = 1:250
     A_cont = [];
     B_cont = [];
-
+    
     co = ctrb(A(:,:,t1),B(:,:,t1));
     rk = rank(co);
     [mat1,mat2] = qr(co);
@@ -50,10 +61,15 @@ for t1 = 1:251
     R = eye(5);
     [K,S,E] = lqr(A_cont,B_cont,Q,R);
     
-    X_cont = mat1*X_des(t1,2:11)'; %% Change this to the X from the system
-    S_cont(t1,:) = K*X_cont(1:rk);
-%     X_obt = Ah(:,:,i)*X_des(t1,:) + Bh(:,:,i)*(S_cont(t1,:)); %% Edit
-%     this for obtaining the obtained X
+    %     X_cont = mat1*X_des(t1,2:11)'; %% Change this to the X from the system
+    X_cont = mat1*X_obt(:,t1);
+    U_cont(t1,:) = -K*X_cont(1:rk,:);
+    X_obt = [X_obt, (X_des(t1+1,2:11)' + (X_obt(:,t1) - X_des(t1,2:11)') + 0.01*(Ah(:,:,t1)*(X_obt(:,t1) - X_des(t1,2:11)') + ...
+                  Bh*U_cont(t1,:)'))];
+    
+%     X_obt):,t1) + 
+%     Ah(:,:,i)*X_des(t1,:) + Bh(:,:,i)*(S_cont(t1,:)); %% Edit
+%     %     this for obtaining the obtained X
 end
 
 %
