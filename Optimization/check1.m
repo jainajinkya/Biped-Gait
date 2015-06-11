@@ -28,7 +28,7 @@ m7 = 0.4;
 [X_des, U_des] = refData1();
 
 for i = 1:251
-    [A(:,:,i),B(:,:,i),A_ori(:,:,i),B_ori(:,:,i)]  = funcF1(X_des(i,2:11), U_des(i,2:6));
+    [A(:,:,i),B(:,:,i)]  = funcF1(X_des(i,2:11), U_des(i,2:6));
 end
 
 LSwing = [0:0.01:0.35, 0.85:0.01:1.33, 1.83:0.01:2.31];

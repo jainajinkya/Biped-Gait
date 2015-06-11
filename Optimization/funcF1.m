@@ -1,4 +1,4 @@
-function [A,B,A_ori,B_ori] = funcF1(X_des,U_des)
+function [A,B] = funcF1(X_des,U_des)
 tic
 global m2 m3 m4 m5 m6 m7 l1 l2 l3 l4 h w
 
@@ -109,8 +109,5 @@ for i = 1:10
 end
 
 B = inv_Mat1;
-
-A_ori = (inv_Mat1);
-B_ori = (inv_Mat1)*Mat2_val;
 toc
 end
